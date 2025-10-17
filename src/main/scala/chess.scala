@@ -1,9 +1,9 @@
 import scala.io.StdIn.readLine
 
 object Schach:
-    def main(args:Array[String]) = 
-        println("\nWelcome to Chess")
-        try 
+    def main(args:Array[String]) =
+        println("\nWelcome to Chess!")
+        try
             args(0).toInt
             println(createChessBoard(args(0).toInt))
         catch
@@ -17,7 +17,7 @@ object Schach:
         println("Spielbrettgröße in Int: ")
         while(true)
             val input = readLine()
-            try 
+            try
                 return input.toInt
             catch
                 case _: NumberFormatException =>
