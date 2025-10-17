@@ -2,7 +2,7 @@ import scala.io.StdIn.readLine
 
 object Schach:
     def main(args:Array[String]) =
-        println("\nWelcome to Chess!")
+        println("\nWelcome to Chess.")
         try
             args(0).toInt
             println(createChessBoard(args(0).toInt))
