@@ -13,11 +13,5 @@ object Schach:
 
     def getSize():Int =
         println("Spielbrettgröße in Int: ")
-        while(true)
-            val input = readLine()
-            try
-                return input.toInt
-            catch
-                case _: NumberFormatException =>
-                    println("Ungültige eingabe!")
-        0
+        val input = readLine()
+        input.toIntOption.getOrElse(getSize())
