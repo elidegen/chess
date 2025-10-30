@@ -1,6 +1,6 @@
 import scala.io.StdIn.readLine
 
-object Schach:
+object Chess:
     def main(args:Array[String]) =
         println("\nWelcome to Chess?")
         val size =
