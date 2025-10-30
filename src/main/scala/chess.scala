@@ -2,7 +2,7 @@ import scala.io.StdIn.readLine
 
 object Chess:
     def main(args:Array[String]) =
-        println("\nWelcome to Chess?")
+        println("\nWelcome to Chess")
         val size =
         args.headOption
             .flatMap(_.toIntOption)
@@ -11,7 +11,6 @@ object Chess:
 
     def createChessBoard(size:Int):String = ("+" + " - +" * size + "\n" + "|   "* size + "|\n")* (size) + "+" + " - +" * size
 
-    def getSize():Int =
+    def getSize(input: () => String = readLine):Int =
         println("Spielbrettgröße in Int: ")
-        val input = readLine()
-        input.toIntOption.getOrElse(getSize())
+        input().toIntOption.getOrElse(getSize(input))
