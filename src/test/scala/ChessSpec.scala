@@ -44,4 +44,10 @@ class ChessSpec extends AnyWordSpec with Matchers{
             Chess.getSize(fake) should be (3)
         }
     }
+    "init" should {
+        "print welcome to chess and return chessboard as string" in {
+            Chess.init(Array("4")) should startWith("+ - +")
+            Chess.init(Array("4")) should endWith("+ - +")
+        }
+    }
 }
