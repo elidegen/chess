@@ -1,1 +1,1 @@
-case class Tile(piece: Option[Piece], x: Char, y: Int)
+case class Tile(x: Char, y: Int)
