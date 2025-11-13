@@ -1,6 +1,7 @@
 package aview
 
 import controller.Controller
+import util.Observer
 
 class Tui(controller: Controller) extends Observer:
   controller.add(this)
@@ -10,4 +11,6 @@ class Tui(controller: Controller) extends Observer:
     input match
       case "q" =>
       case "n" => controller.newGame
-      case _ =>
+      case _ => controller.chessboard.move(controller.parseMove(input))
+
+  override def update: Unit = println(controller.chessboard.toString)

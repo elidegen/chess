@@ -1,4 +1,6 @@
-case class Move(from: Tile, to: Tile)
+package model
+
+import model.{Tile, Piece, Move}
 
 case class Chessboard(tiles: Map[Tile, Piece]):
 
@@ -24,8 +26,8 @@ case class Chessboard(tiles: Map[Tile, Piece]):
       ("+" + " - +" * size + "\n" + "| x " * size + "|\n") * (size) + "+" + " - +" * size
     for
       x <- 'a' to 'h'
-      y <- 0 until size
-    yield board = board.replaceFirst("x", getPiece(Tile(x, y)))
+      y <- 1 to size
+    yield board = board.replaceFirst("x", getPiece(Tile(x, y)).toString())
     board
 
 object Chessboard:

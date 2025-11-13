@@ -1,5 +1,6 @@
 import scala.io.StdIn.readLine
 import controller.Controller
+import aview.Tui
 
 object Chess:
 
