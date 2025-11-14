@@ -12,6 +12,7 @@ class Tui(controller: Controller) extends Observer:
       case "q" =>
       case "n" => controller.newGame
       case _ => controller.parseMove(input)
-    // print("\u001b[2J\u001b[H")
 
-  override def update: Unit = println(controller.chessboard.toString)
+  override def update: Unit =
+    print("\u001b[2J\u001b[H")
+    println(controller.chessboard.toString)

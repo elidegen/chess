@@ -1,7 +1,7 @@
 package controller
 
-import model._
-import util._
+import model.{Chessboard, Tile, Move}
+import util.Observable
 
 case class Controller() extends Observable:
   var chessboard: Chessboard = Chessboard.initial

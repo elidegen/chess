@@ -23,11 +23,16 @@ case class Chessboard(tiles: Map[Tile, Piece]):
   override def toString(): String =
     val size = 8
     var board =
-      ("+" + " - +" * size + "\n" + "| x " * size + "|\n") * (size) + "+" + " - +" * size
+      ("  +" + " - +" * size + "\n" + "q " + "| x " * size + "|\n") * (size) + "  +" + " - +" * size + "\n    r   r   r   r   r   r   r   r"
     for
       y <- size to 1 by -1
       x <- 'a' to 'h'
-    do board = board.replaceFirst("x", getPiece(Tile(x, y)).toString())
+    do
+      board = board
+        .replaceFirst("x", getPiece(Tile(x, y)).toString())
+        .replaceFirst("r", x.toString)
+    for y <- size to 1 by -1
+    do board = board.replaceFirst("q", y.toString)
     board
 
 object Chessboard:
