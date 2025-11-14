@@ -5,8 +5,8 @@ import aview.Tui
 object Chess:
 
   def main(args: Array[String]): Unit =
-    val controller = new Controller()
-    val tui = new Tui(controller)
+    val controller = Controller()
+    val tui = Tui(controller)
 
     Iterator
       .continually(readLine())

@@ -1,16 +1,16 @@
 package model
 
-import model.{Tile, Piece, Move}
+import model._
 
 case class Chessboard(tiles: Map[Tile, Piece]):
 
-  def getPiece(move: Move): Piece = tiles.get(move.from).get: Piece
+  def getPiece(move: Move): Piece = tiles.getOrElse(move.from, Empty())
 
   def getPiece(tile: Tile): Piece = tiles.getOrElse(tile, Empty())
 
   def setPiece(tile: Tile, piece: Piece): Chessboard = copy(tiles = tiles + (tile -> piece))
 
-  def isEmpty(piece: Piece): Boolean = piece.isInstanceOf[Empty]
+  // def isEmpty(piece: Piece): Boolean = piece.isInstanceOf[Empty]
 
   def move(move: Move): Chessboard =
     val piece = getPiece(move)
@@ -25,9 +25,9 @@ case class Chessboard(tiles: Map[Tile, Piece]):
     var board =
       ("+" + " - +" * size + "\n" + "| x " * size + "|\n") * (size) + "+" + " - +" * size
     for
+      y <- size to 1 by -1
       x <- 'a' to 'h'
-      y <- 1 to size
-    yield board = board.replaceFirst("x", getPiece(Tile(x, y)).toString())
+    do board = board.replaceFirst("x", getPiece(Tile(x, y)).toString())
     board
 
 object Chessboard:

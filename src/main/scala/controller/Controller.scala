@@ -1,7 +1,7 @@
 package controller
 
-import model.{Chessboard, Tile, Move}
-import util.Observable
+import model._
+import util._
 
 case class Controller() extends Observable:
   var chessboard: Chessboard = Chessboard.initial
@@ -10,10 +10,11 @@ case class Controller() extends Observable:
     chessboard = Chessboard.initial
     notifyObservers
 
-  def parseMove(input: String): Move =
+  def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
     val fromX = move(0)
     val fromY = move(1).asDigit
     val toX = move(2)
     val toY = move(3).asDigit
-    Move(Tile(fromX, fromY), Tile(toX, toY))
+    chessboard = chessboard.move(Move(Tile(fromX, fromY), Tile(toX, toY)))
+    notifyObservers
