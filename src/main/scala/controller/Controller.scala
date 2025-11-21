@@ -3,8 +3,8 @@ package controller
 import model.{Chessboard, Tile, Move}
 import util.Observable
 
-case class Controller() extends Observable:
-  var chessboard: Chessboard = Chessboard.initial
+case class Controller(cb: Chessboard) extends Observable:
+  var chessboard = cb;
 
   def newGame: Unit =
     chessboard = Chessboard.initial

@@ -1,11 +1,11 @@
 import scala.io.StdIn.readLine
 import controller.Controller
 import aview.Tui
+import model.Chessboard
 
 object Chess:
-
   def main(args: Array[String]): Unit =
-    val controller = Controller()
+    val controller = Controller(Chessboard.initial)
     val tui = Tui(controller)
 
     Iterator
