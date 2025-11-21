@@ -1,7 +1,3 @@
-val scala3Version = "3.7.3"
-libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
-libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
-
 lazy val root = project
   .in(file("."))
   .settings(
@@ -13,6 +9,4 @@ lazy val root = project
       "org.scalactic" %% "scalactic" % "3.2.14",
       "org.scalatest" %% "scalatest" % "3.2.14" % Test,
       "org.apache.commons" % "commons-lang3" % "3.20.0",
-      "org.apache.commons" % "commons-io" % "2.21"))
-
-ThisBuild / scalafmtOnCompile := true
+      "commons-io" % "commons-io" % "2.21.0"))
