@@ -5,8 +5,9 @@ lazy val root = project
     version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     libraryDependencies ++= Seq(
-      "org.scalameta" %% "munit" % "1.0.0" % Test,
+      // "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.14",
-      "org.scalatest" %% "scalatest" % "3.2.14" % Test,
-      "org.apache.commons" % "commons-lang3" % "3.20.0",
-      "commons-io" % "commons-io" % "2.21.0"))
+      "org.scalatest" %% "scalatest" % "3.2.14" % Test
+      // "org.apache.commons" % "commons-lang3" % "3.20.0",
+      // "commons-io" % "commons-io" % "2.21.0"
+    ))
