@@ -5,7 +5,7 @@ import model.Chessboard
 
 object Chess:
   def main(args: Array[String]): Unit =
-    val controller = Controller(Chessboard.initial)
+    val controller = Controller(Chessboard.initial("classic"))
     val tui = Tui(controller)
 
     Iterator
