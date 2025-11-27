@@ -8,7 +8,13 @@ class Tui(controller: Controller) extends Observer:
   val size = 8
 
   def processInput(input: String): Unit =
-    input match
+    val trimmedInput = input.trim
+
+    if (trimmedInput.isEmpty)
+      println("Eingabe darf nicht leer sein")
+      return
+
+    trimmedInput match
       case "q" =>
       case "n" => controller.newGame
       case "mode" => setMode()

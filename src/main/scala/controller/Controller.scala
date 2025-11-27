@@ -22,5 +22,18 @@ case class Controller(var cb: Chessboard) extends Observable:
     val fromY = move(1).asDigit
     val toX = move(2)
     val toY = move(3).asDigit
+
+    if (move.length != 4)
+      println("ungueltiger move: beispielmove: e2e4")
+      return
+
+    if (fromX < 'a' || fromX > 'h' || toX < 'a' || toX > 'h')
+      println("ungueltiger move: X muss zwischen a-h liegen")
+      return
+
+    if (fromY < 1 || fromY > 8 || toY < 1 || toY > 8)
+      println("ungueltiger move: Y muss zwischen 1 - 8 liegen")
+      return
+
     chessboard = chessboard.move(Move(Tile(fromX, fromY), Tile(toX, toY)), mode)
     notifyObservers
