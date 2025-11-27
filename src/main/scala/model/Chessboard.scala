@@ -48,3 +48,4 @@ object Chessboard:
       yield
         Tile(x, y) -> createPieceCustom(x, y, mode)
     ).toMap
+
