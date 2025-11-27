@@ -7,7 +7,7 @@ import model._
 
 class ChessboardSpec extends AnyWordSpec with Matchers:
   "getPiece(Tile)" should:
-    val cb = Chessboard.initial
+    val cb = Chessboard.initial("classic")
     "return the piece located in Tile" in:
       cb.getPiece(Tile('a', 2)) shouldBe Pawn(false)
       cb.getPiece(Tile('e', 1)) shouldBe King(false)
@@ -15,7 +15,7 @@ class ChessboardSpec extends AnyWordSpec with Matchers:
       cb.getPiece(Tile('e', 4)) shouldBe Empty()
   "getPiece(Move)" should:
     "return the piece located at move.from" in:
-      val cb = Chessboard.initial
+      val cb = Chessboard.initial("classic")
       val move = Move(Tile('e', 2), Tile('e', 4))
 
       cb.getPiece(move) shouldBe Pawn(false)
@@ -26,23 +26,23 @@ class ChessboardSpec extends AnyWordSpec with Matchers:
     //   an[NoSuchElementException] shouldBe thrownBy:
     //     chessboard.getPiece(move)
   "setPiece(Tile, Piecef)" should:
-    val cb = Chessboard.initial
+    val cb = Chessboard.initial("classic")
     val piece = Pawn(false)
     val tile = Tile('a', 3)
     "return a chessboard with pawn on a3" in:
       val newCb = cb.setPiece(tile, piece)
       newCb.getPiece(tile) shouldBe Pawn(false)
   "move(Move)" should:
-    val cb = Chessboard.initial
+    val cb = Chessboard.initial("classic")
     val tile1 = Tile('a', 2)
     val tile2 = Tile('a', 3)
     val move = Move(tile1, tile2)
     "return a new chessboard with implemented move" in:
-      val newCb = cb.move(move)
+      val newCb = cb.move(move, "classic")
       newCb.getPiece(tile2) shouldBe Pawn(false)
   "override toString()" should:
     "print chessboard" in:
-      val cb = Chessboard.initial
+      val cb = Chessboard.initial("classic")
       cb.toString shouldBe """  + - + - + - + - + - + - + - + - +
 8 | ♜ | ♞ | ♝ | ♛ | ♚ | ♝ | ♞ | ♜ |
   + - + - + - + - + - + - + - + - +
