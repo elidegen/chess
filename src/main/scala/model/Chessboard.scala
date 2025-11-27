@@ -2,13 +2,15 @@ package model
 
 import model._
 
-case class Chessboard(tiles: Map[Tile, Piece]):
+abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   def getPiece(move: Move): Piece = tiles.getOrElse(move.from, Empty())
 
   def getPiece(tile: Tile): Piece = tiles.getOrElse(tile, Empty())
 
   def setPiece(tile: Tile, piece: Piece): Chessboard = copy(tiles = tiles + (tile -> piece))
+
+  abstract def validateMove(move: Move): Boolean
 
   // def isEmpty(piece: Piece): Boolean = piece.isInstanceOf[Empty]
 
@@ -48,4 +50,3 @@ object Chessboard:
       yield
         Tile(x, y) -> createPieceCustom(x, y, mode)
     ).toMap
-
