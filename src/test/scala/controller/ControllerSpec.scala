@@ -6,16 +6,10 @@ import org.scalatest.matchers.should.Matchers
 import model._
 
 class ControllerSpec extends AnyWordSpec with Matchers:
-  "newGame" should:
-    "reset chessboard to start position" in:
-      val controller = Controller(Chessboard.initial("classic"))
-      controller.chessboard.move(Move(Tile('a', 2), Tile('a', 3)), "classic")
-      controller.newGame
-      controller.chessboard.getPiece(Tile('a', 2)) shouldBe Pawn(false)
   "setMode" should:
     "start a new game in proper mode" in:
       val controller = Controller(Chessboard.initial("classic"))
-      controller.chessboard.move(Move(Tile('a', 2), Tile('a', 3)), "classic")
+      controller.chessboard.move(Move(Tile('a', 2), Tile('a', 3)))
       controller.setMode("classic")
       controller.chessboard.getPiece(Tile('a', 1)) shouldBe Rook(false)
   "parseMove(String)" should:

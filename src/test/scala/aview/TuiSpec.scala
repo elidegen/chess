@@ -11,7 +11,7 @@ class TuiSpec extends AnyWordSpec with Matchers:
     "create new chessboard" in:
       val controller = Controller(Chessboard.initial("classic"))
       val tui = Tui(controller)
-      controller.chessboard.move(Move(Tile('a', 2), Tile('a', 3)), "classic")
+      controller.chessboard.move(Move(Tile('a', 2), Tile('a', 3)))
       tui.processInput("n")
       controller.chessboard.getPiece(Tile('a', 2)) shouldBe Pawn(false)
     //"change mode" in:

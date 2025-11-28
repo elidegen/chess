@@ -38,7 +38,7 @@ class ChessboardSpec extends AnyWordSpec with Matchers:
     val tile2 = Tile('a', 3)
     val move = Move(tile1, tile2)
     "return a new chessboard with implemented move" in:
-      val newCb = cb.move(move, "classic")
+      val newCb = cb.move(move)
       newCb.getPiece(tile2) shouldBe Pawn(false)
   "override toString()" should:
     "print chessboard" in:
