@@ -16,8 +16,7 @@ class Tui(controller: Controller) extends Observer:
 
     trimmedInput match
       case "q" =>
-      case "n" => controller.newGame
-      case "mode" => setMode()
+      case "n" => setMode()
       case _ => controller.parseMove(input)
 
   def setMode(): Unit =

@@ -12,7 +12,7 @@ case class Chessboard(tiles: Map[Tile, Piece]):
 
   // def isEmpty(piece: Piece): Boolean = piece.isInstanceOf[Empty]
 
-  def move(move: Move, mode: String): Chessboard =
+  def move(move: Move): Chessboard =
     val piece = getPiece(move)
     setPiece(move.to, piece).setPiece(move.from, Empty())
 

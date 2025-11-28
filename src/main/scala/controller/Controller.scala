@@ -7,10 +7,6 @@ case class Controller(var cb: Chessboard) extends Observable:
   var chessboard = cb;
   var mode: String = "classic"
 
-  def newGame: Unit =
-    chessboard = Chessboard.initial(mode)
-    notifyObservers
-
   def setMode(newMode: String): Unit =
     mode = newMode
     chessboard = Chessboard.initial(mode)
@@ -35,5 +31,5 @@ case class Controller(var cb: Chessboard) extends Observable:
       println("ungueltiger move: Y muss zwischen 1 - 8 liegen")
       return
 
-    chessboard = chessboard.move(Move(Tile(fromX, fromY), Tile(toX, toY)), mode)
+    chessboard = chessboard.move(Move(Tile(fromX, fromY), Tile(toX, toY)))
     notifyObservers
