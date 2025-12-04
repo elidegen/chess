@@ -37,7 +37,7 @@ case class Chessboard(tiles: Map[Tile, Piece]):
 
 object Chessboard:
 
-  def initial(mode: String = "Classic"): Chessboard =
+  def apply(mode: String = "Classic"): Chessboard =
     Chessboard(initialTiles(mode))
 
   private def initialTiles(mode: String): Map[Tile, Piece] =

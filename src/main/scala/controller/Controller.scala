@@ -9,7 +9,7 @@ case class Controller(var cb: Chessboard) extends Observable:
 
   def setMode(newMode: String): Unit =
     mode = newMode
-    chessboard = Chessboard.initial(mode)
+    chessboard = Chessboard.apply(mode)
     notifyObservers
 
   def parseMove(input: String): Unit =
