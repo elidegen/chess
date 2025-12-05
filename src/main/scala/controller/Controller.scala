@@ -11,10 +11,6 @@ case class Controller(var cb: Chessboard) extends Observable:
     mode = newMode
     chessboard = Chessboard.apply(mode)
 
-  def newGame(mode: Mode): Unit =
-    chessboard = Chessboard.initial
-    notifyObservers
-
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
     val fromX = move(0)

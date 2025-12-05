@@ -11,4 +11,7 @@ final case class GameContext(board: Chessboard, currentPlayer: Color, state: Gam
   def switchPlayer: GameContext =
     copy(currentPlayer = currentPlayer.opponent)
 
-object NotSt
+// object NotStartedState extends GameState:
+//   override def handleMove(ctx: GameContext, move: Any): GameContext =
+//     println("Please start a new game with n")
+//   override def name: String = "Not Started"
