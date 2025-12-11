@@ -16,17 +16,8 @@ class Tui(controller: Controller) extends Observer:
 
     trimmedInput match
       case "q" =>
-      case "n" => setMode()
+      case "n" => controller.newGame()
       case _ => controller.parseMove(input)
-
-  def setMode(): Unit =
-    val mode = scala.io.StdIn.readLine("Choose a mode:\n" +
-        "1. classic\n").trim match
-      case "classic" => "classic"
-      //case "Chess960" => "Chess960"
-      case _   => "classic"
-
-    controller.setMode(mode)
 
   override def update: Unit =
     print("\u001b[2J\u001b[H")

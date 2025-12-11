@@ -1,15 +1,13 @@
 package controller
 
-import model.{Chessboard, Tile, Move}
+import model.{Chessboard, Tile, Move, Classic, StartPositions}
 import util.Observable
 
 case class Controller(var cb: Chessboard) extends Observable:
   var chessboard = cb;
-  var mode: String = "classic"
 
-  def setMode(newMode: String): Unit =
-    mode = newMode
-    chessboard = Chessboard.apply(mode)
+  def newGame() =
+    chessboard = new Classic(StartPositions.classic)
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
