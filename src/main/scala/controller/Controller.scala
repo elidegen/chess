@@ -1,7 +1,7 @@
 package controller
 
 import model.{Chessboard, Tile, Move}
-import util.Observable
+import util.{Observable,UndoManager}
 
 case class Controller(var cb: Chessboard) extends Observable:
   var chessboard = cb;
@@ -10,6 +10,10 @@ case class Controller(var cb: Chessboard) extends Observable:
   def setMode(newMode: String): Unit =
     mode = newMode
     chessboard = Chessboard.apply(mode)
+
+  def set(row: Int, col: Int, value: Int): Unit =
+    undoManager.doStep(new SetCommand())
+    notifyObservers
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
