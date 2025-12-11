@@ -15,6 +15,14 @@ case class Controller(var cb: Chessboard) extends Observable:
     undoManager.doStep(new SetCommand())
     notifyObservers
 
+  def undo(): Unit =
+    undoManager.undoStep()
+    chessboard = undoManager.undoStack.head.doStep()
+
+  def redo(): Unit =
+    undoManager.redoStep()
+    chessboard = undoManager.redoStack.head.doStep()
+
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
     val fromX = move(0)
