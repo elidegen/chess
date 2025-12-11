@@ -11,10 +11,19 @@ case class Controller(var chessboard: Chessboard) extends Observable:
 
   def setMode(newMode: String): Unit =
     mode = newMode
-    chessboard = Chessboard.apply(mode)
+    newMode match
+    case "classic" =>
+      chessboard = Chessboard("classic")
+    case "Chess960" =>
+      chessboard = Chessboard("Chess960")
+    case _ =>
+      println(s"Unbekannter Modus: $newMode")
+
 
   def set(row: Int, col: Int, value: Int): Unit =
-    undoManager.doStep(new SetCommand(tile, piece, controller))
+    val tile = Tile(row.toChar, col)
+    val piece = chessboard.getPiece(tile)
+    undoManager.doStep(new SetCommand(tile, piece, this))
     notifyObservers
 
   def undo(): Unit =
@@ -22,7 +31,7 @@ case class Controller(var chessboard: Chessboard) extends Observable:
     notifyObservers
 
   def redo(): Unit =
-    undoManager.redoStep()
+    undoManager.redoStep
     notifyObservers
 
   def parseMove(input: String): Unit =
