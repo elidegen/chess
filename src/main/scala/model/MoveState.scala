@@ -1,4 +1,4 @@
-package Model
+package model
 
 sealed trait MoveState:
   def isMoveLegal(): Boolean

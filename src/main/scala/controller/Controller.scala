@@ -3,25 +3,27 @@ package controller
 import model.{Chessboard, Tile, Move}
 import util.{Observable,UndoManager}
 
-case class Controller(var cb: Chessboard) extends Observable:
-  var chessboard = cb;
+
+case class Controller(var chessboard: Chessboard) extends Observable:
+
   var mode: String = "classic"
+  private val undoManager = new UndoManager()
 
   def setMode(newMode: String): Unit =
     mode = newMode
     chessboard = Chessboard.apply(mode)
 
   def set(row: Int, col: Int, value: Int): Unit =
-    undoManager.doStep(new SetCommand())
+    undoManager.doStep(new SetCommand(tile, piece, controller))
     notifyObservers
 
   def undo(): Unit =
-    undoManager.undoStep()
-    chessboard = undoManager.undoStack.head.doStep()
+    undoManager.undoStep
+    notifyObservers
 
   def redo(): Unit =
     undoManager.redoStep()
-    chessboard = undoManager.redoStack.head.doStep()
+    notifyObservers
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")

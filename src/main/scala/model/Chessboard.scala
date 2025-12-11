@@ -2,7 +2,7 @@ package model
 
 import model._
 
-abstract class Chessboard(tiles: Map[Tile, Piece]):
+class Chessboard(tiles: Map[Tile, Piece]):
 
   protected def createInitialTiles(): Map[Tile, Piece]
 
