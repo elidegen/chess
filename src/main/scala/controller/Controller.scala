@@ -1,27 +1,32 @@
 package controller
 
-import model.{Chessboard, Tile, Move, Classic, StartPositions}
+import model.{Chessboard, Tile, Move, Classic, StartPositions, Piece}
 import util.{Observable, UndoManager}
 
 case class Controller(var chessboard: Chessboard) extends Observable:
 
-  private val undoManager = new UndoManager()
+  val undoManager = new UndoManager()
 
-  def set(row: Int, col: Int, value: Int): Unit =
-    val tile = Tile(row.toChar, col)
-    val piece = chessboard.getPiece(tile)
-    undoManager.doStep(new SetCommand(tile, piece, this))
+  //def set(from: Tile, to: Tile, piece: Piece): Unit =
+  //  val piece = chessboard.getPiece(tile)
+  //  undoManager.doStep(new MoveCommand(tile, piece, this))
+  //  notifyObservers
+
+  def movePiece(from: Tile, to: Tile, piece: Piece, capturedPiece: Option[Piece]): Unit =
+    val moveCommand = new MoveCommand(from, to, piece, capturedPiece, chessboard)
+    moveCommand.doStep
     notifyObservers
 
-  def undo(): Unit =
+
+  def undo: Unit =
     undoManager.undoStep
     notifyObservers
 
-  def redo(): Unit =
+  def redo: Unit =
     undoManager.redoStep
     notifyObservers
 
-  def newGame() =
+  def newGame =
     chessboard = new Classic(StartPositions.classic)
     notifyObservers
 

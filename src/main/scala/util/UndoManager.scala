@@ -24,4 +24,3 @@ class UndoManager:
         redoStack = stack
         undoStack = head :: undoStack
 
-
