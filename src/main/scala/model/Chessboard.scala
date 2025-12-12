@@ -12,8 +12,8 @@ abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   lazy val validator: MoveValidator = createMoveValidator()
 
-  def validateMove(move: Move): Boolean =
-    validator.validate(move, this)
+  def validateMove(ctx: GameContext, move: Move): Boolean =
+    validator.validate(ctx, move)
 
   def reset(): Chessboard =
     newBoard(createInitialTiles())
@@ -44,16 +44,3 @@ abstract class Chessboard(tiles: Map[Tile, Piece]):
     for y <- size to 1 by -1
     do board = board.replaceFirst("q", y.toString)
     board
-
-object Chessboard:
-
-  def apply(mode: String = "Classic"): Chessboard =
-    Chessboard(initialTiles(mode))
-
-  private def initialTiles(mode: String): Map[Tile, Piece] =
-    (
-      for
-        x <- 'a' to 'h'
-        y <- 1 to 8
-      yield Tile(x, y) -> createPieceCustom(x, y, mode)
-    ).toMap

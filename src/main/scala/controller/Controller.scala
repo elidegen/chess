@@ -1,24 +1,12 @@
 package controller
 
-import model.{Chessboard, Tile, Move}
+import model.{Chessboard, Tile, Move, Classic, StartPositions}
 import util.{Observable,UndoManager}
 
 
 case class Controller(var chessboard: Chessboard) extends Observable:
 
-  var mode: String = "classic"
   private val undoManager = new UndoManager()
-
-  def setMode(newMode: String): Unit =
-    mode = newMode
-    newMode match
-    case "classic" =>
-      chessboard = Chessboard("classic")
-    case "Chess960" =>
-      chessboard = Chessboard("Chess960")
-    case _ =>
-      println(s"Unbekannter Modus: $newMode")
-
 
   def set(row: Int, col: Int, value: Int): Unit =
     val tile = Tile(row.toChar, col)
@@ -33,6 +21,9 @@ case class Controller(var chessboard: Chessboard) extends Observable:
   def redo(): Unit =
     undoManager.redoStep
     notifyObservers
+
+  def newGame() =
+    chessboard = new Classic(StartPositions.classic)
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
