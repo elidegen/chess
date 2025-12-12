@@ -23,8 +23,7 @@ abstract class Chessboard(tiles: Map[Tile, Piece]):
   def getPiece(tile: Tile): Piece = tiles.getOrElse(tile, Empty())
 
   def setPiece(tile: Tile, piece: Piece): Chessboard =
-    val newTiles = tiles + (tile -> piece)
-    new Chessboard(newTiles)
+    newBoard(tiles + (tile -> piece))
 
   def move(move: Move): Chessboard =
     val piece = getPiece(move)

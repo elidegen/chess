@@ -15,10 +15,10 @@ class Tui(controller: Controller) extends Observer:
       return
 
     trimmedInput match
-      case "q" =>
-      case "u" => controller.undo()
-      case "r" => controller.redo()
-      case "n" => controller.newGame()
+      case "quit" =>
+      case "undo" => controller.undo()
+      case "redo" => controller.redo()
+      case "new" => controller.newGame()
       case _ => controller.parseMove(input)
 
   override def update: Unit =

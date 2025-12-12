@@ -10,5 +10,5 @@ object Chess:
 
     Iterator
       .continually(readLine())
-      .takeWhile(_ != "q")
+      .takeWhile(_ != "quit")
       .foreach(tui.processInput)

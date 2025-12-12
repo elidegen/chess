@@ -33,6 +33,6 @@ case class ClassicMoveValidator() extends MoveValidator:
         else if ctx.board.validator.isCheck(ctx.board, ctx.currentPlayer) then false
         else true
 
-  def isCheck(board: Chessboard, color: Color): Boolean = false
-  def isDraw(board: Chessboard, color: Color): Boolean = false
-  def isCheckmate(board: Chessboard, color: Color): Boolean = false
+  override def isCheck(board: Chessboard, color: Color): Boolean = false
+  override def isDraw(board: Chessboard, color: Color): Boolean = false
+  override def isCheckmate(board: Chessboard, color: Color): Boolean = false

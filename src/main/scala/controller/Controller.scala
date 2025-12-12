@@ -1,8 +1,7 @@
 package controller
 
 import model.{Chessboard, Tile, Move, Classic, StartPositions}
-import util.{Observable,UndoManager}
-
+import util.{Observable, UndoManager}
 
 case class Controller(var chessboard: Chessboard) extends Observable:
 
@@ -24,6 +23,7 @@ case class Controller(var chessboard: Chessboard) extends Observable:
 
   def newGame() =
     chessboard = new Classic(StartPositions.classic)
+    notifyObservers
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
