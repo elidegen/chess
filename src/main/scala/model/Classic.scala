@@ -3,7 +3,7 @@ package model
 class Classic(initialTiles: Map[Tile, Piece]) extends Chessboard(initialTiles):
 
   override protected def newBoard(tiles: Map[Tile, Piece]): Chessboard =
-    new Classic(StartPositions.classic)
+    new Classic(tiles)
 
   override protected def createInitialTiles(): Map[Tile, Piece] =
     StartPositions.classic
@@ -32,3 +32,7 @@ case class ClassicMoveValidator() extends MoveValidator:
         else if !piece.isMoveLegal(ctx, move) then false
         else if ctx.board.validator.isCheck(ctx.board, ctx.currentPlayer) then false
         else true
+
+  def isCheck(board: Chessboard, color: Color): Boolean = false
+  def isDraw(board: Chessboard, color: Color): Boolean = false
+  def isCheckmate(board: Chessboard, color: Color): Boolean = false
