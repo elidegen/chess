@@ -31,7 +31,7 @@ abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   override def toString(): String =
     val size = 8
-    var board =
+    var board = "\n" +
       ("  +" + " - +" * size + "\n" + "q " + "| x " * size + "|\n") * (size) + "  +" + " - +" * size + "\n    r   r   r   r   r   r   r   r"
     for
       y <- size to 1 by -1

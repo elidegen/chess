@@ -1,10 +1,10 @@
 package controller
 
-import model.{Chessboard, Tile, Move, Classic, StartPositions}
+import model.{GameMode, GameFactory, Chessboard, Tile, Move, Classic, StartPositions, White, PlayingState, GameContext}
 import util.{Observable, UndoManager}
 
-case class Controller(var chessboard: Chessboard) extends Observable:
-
+case class Controller(var ctx: GameContext) extends Observable:
+  def chessboard: Chessboard = ctx.board
   private val undoManager = new UndoManager()
 
   def set(row: Int, col: Int, value: Int): Unit =
@@ -21,28 +21,27 @@ case class Controller(var chessboard: Chessboard) extends Observable:
     undoManager.redoStep
     notifyObservers
 
-  def newGame() =
-    chessboard = new Classic(StartPositions.classic)
+  def newGame(mode: GameMode = GameMode.Classic): Unit =
+    ctx = GameFactory.newGame(mode)
     notifyObservers
 
   def parseMove(input: String): Unit =
     val move = input.replace(" ", "")
-    val fromX = move(0)
-    val fromY = move(1).asDigit
-    val toX = move(2)
-    val toY = move(3).asDigit
 
     if (move.length != 4)
       println("ungueltiger move: beispielmove: e2e4")
       return
 
-    if (fromX < 'a' || fromX > 'h' || toX < 'a' || toX > 'h')
-      println("ungueltiger move: X muss zwischen a-h liegen")
+    val fromX = move(0)
+    val fromY = move(1).asDigit
+    val toX = move(2)
+    val toY = move(3).asDigit
+
+    if (fromX < 'a' || fromX > 'h' || toX < 'a' || toX > 'h' || fromY < 1 || fromY > 8 || toY < 1 || toY > 8)
+      println("ungueltige koordinaten")
       return
 
-    if (fromY < 1 || fromY > 8 || toY < 1 || toY > 8)
-      println("ungueltiger move: Y muss zwischen 1 - 8 liegen")
-      return
-
-    chessboard = chessboard.move(Move(Tile(fromX, fromY), Tile(toX, toY)))
+    val ctxNew = ctx.handleMove(Move(Tile(fromX, fromY), Tile(toX, toY)))
+    if (ctx == ctxNew) return;
+    ctx = ctxNew;
     notifyObservers

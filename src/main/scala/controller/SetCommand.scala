@@ -1,14 +1,16 @@
 package controller
 
-import model.{Chessboard, Tile, Piece}
+import model.{Tile, Piece}
 import util.Command
 
 class SetCommand(tile: Tile, piece: Piece, controller: Controller) extends Command:
 
-  val previousPiece: Piece =    controller.chessboard.getPiece(tile)
+  val previousPiece: Piece = controller.ctx.board.getPiece(tile)
 
-  override def doStep: Unit =   controller.chessboard = controller.chessboard.setPiece(tile, piece)
+  override def doStep: Unit = controller.ctx =
+    controller.ctx.copy(board = controller.ctx.board.setPiece(tile, piece))
 
-  override def undoStep: Unit = controller.chessboard = controller.chessboard.setPiece(tile, previousPiece)
+  override def undoStep: Unit = controller.ctx =
+    controller.ctx.copy(board = controller.ctx.board.setPiece(tile, previousPiece))
 
-  override def redoStep: Unit = controller.chessboard = controller.chessboard.setPiece(tile, piece)
+  override def redoStep: Unit = doStep

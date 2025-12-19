@@ -5,7 +5,7 @@ object PlayingState extends GameState:
 
   override def handleMove(ctx: GameContext, move: Move): GameContext =
     if !ctx.board.validateMove(ctx, move) then
-      println("Invalid Move!")
+      println("Invalid Move! playingState")
       ctx
     else
       val newBoard = ctx.board.move(move)
