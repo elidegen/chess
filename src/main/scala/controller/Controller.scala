@@ -7,18 +7,18 @@ case class Controller(var ctx: GameContext) extends Observable:
   def chessboard: Chessboard = ctx.board
   private val undoManager = new UndoManager()
 
-  def set(row: Int, col: Int, value: Int): Unit =
-    val tile = Tile(row.toChar, col)
-    val piece = chessboard.getPiece(tile)
-    undoManager.doStep(new SetCommand(tile, piece, this))
-    notifyObservers
+  // def set(row: Int, col: Int, value: Int): Unit =
+  //   val tile = Tile(row.toChar, col)
+  //   val piece = chessboard.getPiece(tile)
+  //   undoManager.doStep(new SetCommand(tile, piece, this))
+  //   notifyObservers
 
   def undo(): Unit =
-    undoManager.undoStep
+    undoManager.undoStep()
     notifyObservers
 
   def redo(): Unit =
-    undoManager.redoStep
+    undoManager.redoStep()
     notifyObservers
 
   def newGame(mode: GameMode = GameMode.Classic): Unit =
@@ -29,7 +29,7 @@ case class Controller(var ctx: GameContext) extends Observable:
     val move = input.replace(" ", "")
 
     if (move.length != 4)
-      println("ungueltiger move: beispielmove: e2e4")
+      println("invalid input! enter move like this: e2e4")
       return
 
     val fromX = move(0)
@@ -38,10 +38,11 @@ case class Controller(var ctx: GameContext) extends Observable:
     val toY = move(3).asDigit
 
     if (fromX < 'a' || fromX > 'h' || toX < 'a' || toX > 'h' || fromY < 1 || fromY > 8 || toY < 1 || toY > 8)
-      println("ungueltige koordinaten")
+      println("invalid coordinates")
       return
 
     val ctxNew = ctx.handleMove(Move(Tile(fromX, fromY), Tile(toX, toY)))
     if (ctx == ctxNew) return;
-    ctx = ctxNew;
+    undoManager.doStep(new MoveCommand(this, ctxNew))
+
     notifyObservers

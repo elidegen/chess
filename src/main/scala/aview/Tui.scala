@@ -5,13 +5,12 @@ import util.Observer
 
 class Tui(controller: Controller) extends Observer:
   controller.add(this)
-  val size = 8
 
   def processInput(input: String): Unit =
     val trimmedInput = input.trim
 
     if (trimmedInput.isEmpty)
-      println("Eingabe darf nicht leer sein")
+      println("input should not be empty")
       return
 
     trimmedInput match
