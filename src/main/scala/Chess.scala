@@ -14,6 +14,7 @@ object Chess:
     val tui = Tui(controller)
 
     Iterator
-      .continually(readLine())
-      .takeWhile(_ != "quit")
+      .continually(Option(readLine()))
+      .takeWhile(_.exists(_ != "quit"))
+      .flatten
       .foreach(tui.processInput)
