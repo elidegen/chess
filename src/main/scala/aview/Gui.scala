@@ -12,6 +12,12 @@ import scalafx.stage.Stage
 import controller.Controller
 import model.{Bishop, Black, Chessboard, Empty, GameMode, King, Knight, Pawn, Queen, Rook, Tile, White, Piece}
 import util.Observer
+import scalafx.scene.control.Hyperlink
+import scalafx.scene.text.{Text, TextFlow}
+import java.awt.Desktop
+import java.net.URI
+import scalafx.scene.layout.Region
+import scalafx.scene.layout.Priority
 
 final class Gui(controller: Controller) extends Observer:
   controller.add(this)
@@ -26,11 +32,10 @@ final class Gui(controller: Controller) extends Observer:
 
   private val squares: Array[Array[ImageView]] =
     Array.fill(8, 8)(new ImageView:
-      fitWidth = 48
-      fitHeight = 48
+      fitWidth = 56
+      fitHeight = 56
       preserveRatio = true
-      // smooth = true
-    )
+      smooth = true)
 
   private val boardGrid: GridPane = new GridPane:
     hgap = 0
@@ -38,14 +43,14 @@ final class Gui(controller: Controller) extends Observer:
 
   private val backgrounds: Array[Array[Rectangle]] =
     Array.fill(8, 8)(new Rectangle {
-      width = 56
-      height = 56
+      width = 64
+      height = 64
     })
 
   private val overlays: Array[Array[Rectangle]] =
     Array.fill(8, 8)(new Rectangle {
-      width = 56
-      height = 56
+      width = 64
+      height = 64
       fill = Color.rgb(220, 20, 60, 0.4)
       visible = false
     })
@@ -139,7 +144,26 @@ final class Gui(controller: Controller) extends Observer:
 
   private def renderStatus(): Unit =
     statusLabel.text =
-      s"State: ${controller.ctx.state.name} | Current Player: ${controller.ctx.currentPlayer}"
+      s"State: ${controller.ctx.state.name}  |  Current Player: ${controller.ctx.currentPlayer}"
+
+  val infoText = new Text("Icons provided by")
+
+  val helpLink = new Hyperlink("Sharechess") {
+    textFill = Color.Blue
+    underline = true
+    onAction = _ => {
+      Desktop.getDesktop.browse(new URI("https://sharechess.github.io/"))
+    }
+  }
+
+  val statusFlow = new TextFlow {
+
+    children = Seq(infoText, helpLink)
+  }
+
+  val spacer = new Region
+  HBox.setHgrow(spacer, Priority.Always)
+  HBox.setMargin(statusFlow, Insets(6, 0, 0, 0)) // top, right, bottom, left
 
   undo.onAction = _ => controller.undo()
   redo.onAction = _ => controller.redo()
@@ -154,7 +178,7 @@ final class Gui(controller: Controller) extends Observer:
       boardGrid,
       new HBox {
         spacing = 8
-        children = Seq(undo, redo, newGame, quit)
+        children = Seq(undo, redo, newGame, quit, spacer, statusFlow)
       })
   }
 

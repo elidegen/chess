@@ -7,12 +7,6 @@ case class Controller(var ctx: GameContext) extends Observable:
   def chessboard: Chessboard = ctx.board
   private val undoManager = new UndoManager()
 
-  // def set(row: Int, col: Int, value: Int): Unit =
-  //   val tile = Tile(row.toChar, col)
-  //   val piece = chessboard.getPiece(tile)
-  //   undoManager.doStep(new SetCommand(tile, piece, this))
-  //   notifyObservers
-
   def undo(): Unit =
     undoManager.undoStep()
     notifyObservers
