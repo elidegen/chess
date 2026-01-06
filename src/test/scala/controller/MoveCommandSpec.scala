@@ -12,20 +12,19 @@ class MoveCommandSpec extends AnyWordSpec with Matchers:
 
   "MoveCommand" should:
 
-    "set controller.ctx to the provided after-context when executed (doStep)" in:
+    "change controller.ctx to proper context (doStep)" in:
       val before = freshCtx()
       val controller = Controller(before)
 
-      val move = Move(Tile('a', 2), Tile('a', 3))
-      val after = before.handleMove(move)
-      after should not be before // sanity check: move must actually change the context
+      val after = before.handleMove(Move(Tile('a', 2), Tile('a', 3)))
+      after should not be before
 
       val cmd = new MoveCommand(controller, after)
 
       cmd.doStep
       controller.ctx shouldBe after
 
-    "restore the previous context on undoStep" in:
+    "restore the previous context (undoStep)" in:
       val before = freshCtx()
       val controller = Controller(before)
 
@@ -40,7 +39,7 @@ class MoveCommandSpec extends AnyWordSpec with Matchers:
       cmd.undoStep
       controller.ctx shouldBe before
 
-    "re-apply the after-context on redoStep" in:
+    "redo what has been undone (redoStep)" in:
       val before = freshCtx()
       val controller = Controller(before)
 
