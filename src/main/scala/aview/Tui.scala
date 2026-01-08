@@ -5,12 +5,19 @@ import util.Observer
 
 class Tui(controller: Controller) extends Observer:
   controller.add(this)
-  val size = 8
 
   def processInput(input: String): Unit =
-    input match
-      case "q" =>
-      case "n" => controller.newGame
+    val trimmedInput = input.trim
+
+    if (trimmedInput.isEmpty)
+      println("input should not be empty")
+      return
+
+    trimmedInput match
+      case "quit" =>
+      case "undo" => controller.undo()
+      case "redo" => controller.redo()
+      case "new" => controller.newGame()
       case _ => controller.parseMove(input)
 
   override def update: Unit =

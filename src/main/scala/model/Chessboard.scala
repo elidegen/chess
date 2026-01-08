@@ -2,27 +2,36 @@ package model
 
 import model._
 
-case class Chessboard(tiles: Map[Tile, Piece]):
+abstract class Chessboard(tiles: Map[Tile, Piece]):
+
+  protected def createInitialTiles(): Map[Tile, Piece]
+
+  protected def newBoard(tiles: Map[Tile, Piece]): Chessboard
+
+  protected def createMoveValidator(): MoveValidator
+
+  lazy val validator: MoveValidator = createMoveValidator()
+
+  def validateMove(ctx: GameContext, move: Move): Boolean =
+    validator.validate(ctx, move)
+
+  def reset(): Chessboard =
+    newBoard(createInitialTiles())
 
   def getPiece(move: Move): Piece = tiles.getOrElse(move.from, Empty())
 
   def getPiece(tile: Tile): Piece = tiles.getOrElse(tile, Empty())
 
-  def setPiece(tile: Tile, piece: Piece): Chessboard = copy(tiles = tiles + (tile -> piece))
-
-  // def isEmpty(piece: Piece): Boolean = piece.isInstanceOf[Empty]
+  def setPiece(tile: Tile, piece: Piece): Chessboard =
+    newBoard(tiles + (tile -> piece))
 
   def move(move: Move): Chessboard =
     val piece = getPiece(move)
-    setPiece(move.to, piece).setPiece(move.from, Empty())
-
-  // def getSize(input: () => String = readLine): Int =
-  //   println("Spielbrettgröße in Int: ")
-  //   input().toIntOption.getOrElse(getSize(input))
+    newBoard(tiles + (move.to -> piece) + (move.from -> Empty()))
 
   override def toString(): String =
     val size = 8
-    var board =
+    var board = "\n" +
       ("  +" + " - +" * size + "\n" + "q " + "| x " * size + "|\n") * (size) + "  +" + " - +" * size + "\n    r   r   r   r   r   r   r   r"
     for
       y <- size to 1 by -1
@@ -34,31 +43,3 @@ case class Chessboard(tiles: Map[Tile, Piece]):
     for y <- size to 1 by -1
     do board = board.replaceFirst("q", y.toString)
     board
-
-object Chessboard:
-  def initial: Chessboard =
-    Chessboard(initialTiles)
-
-  private def initialTiles: Map[Tile, Piece] =
-    (
-      for
-        x <- 'a' to 'h'
-        y <- 1 to 8
-      yield
-        val piece: Piece = (x, y) match
-          case (_, 2) => Pawn(false)
-          case (_, 7) => Pawn(true)
-          case ('a' | 'h', 1) => Rook(false)
-          case ('a' | 'h', 8) => Rook(true)
-          case ('b' | 'g', 1) => Knight(false)
-          case ('b' | 'g', 8) => Knight(true)
-          case ('c' | 'f', 1) => Bishop(false)
-          case ('c' | 'f', 8) => Bishop(true)
-          case ('d', 1) => Queen(false)
-          case ('d', 8) => Queen(true)
-          case ('e', 1) => King(false)
-          case ('e', 8) => King(true)
-          case _ => Empty()
-
-        Tile(x, y) -> piece
-    ).toMap
