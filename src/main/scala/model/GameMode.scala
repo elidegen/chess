@@ -15,6 +15,6 @@ object GameFactory:
       //   Crazyhouse()
       // case GameMode.Antichess =>
       //   Antichess()
-      case _ =>
+      case null =>
         Classic()
     GameContext(board = board, currentPlayer = White, state = PlayingState)
