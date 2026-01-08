@@ -13,7 +13,7 @@ import controller.Controller
 import model.{Bishop, Black, Chessboard, Empty, GameMode, King, Knight, Pawn, Queen, Rook, Tile, White, Piece}
 import util.Observer
 import scalafx.scene.control.Hyperlink
-import scalafx.scene.text.{Text, TextFlow}
+import scalafx.scene.text.{Font, Text, TextFlow}
 import java.awt.Desktop
 import java.net.URI
 import scalafx.scene.layout.Region
@@ -61,9 +61,40 @@ final class Gui(controller: Controller) extends Observer:
     val bg = backgrounds(col)(row)
     bg.fill = if (lightSquare(col, row)) Color.rgb(240, 217, 181) else Color.rgb(181, 136, 99)
 
+    val isLight = lightSquare(col, row)
+
+    val rankLabel: Option[Text] =
+      if col == 0 then
+        Some(new Text((row + 1).toString) {
+          fill = coordTextColor(isLight)
+          font = Font(12)
+        })
+      else None
+
+    val fileLabel: Option[Text] =
+      if row == 0 then
+        Some(new Text((('a'.toInt + col).toChar).toString) {
+          fill = coordTextColor(isLight)
+          font = Font(12)
+        })
+      else None
+
     val cell = new StackPane:
       alignment = Pos.Center
-      children = Seq(bg, overlays(col)(row), squares(col)(row))
+      children =
+        Seq(bg, overlays(col)(row), squares(col)(row)) ++ rankLabel.toSeq ++ fileLabel.toSeq
+
+    // Position coordinate labels inside the tile
+    rankLabel.foreach { t =>
+      StackPane.setAlignment(t, Pos.TopLeft)
+      StackPane.setMargin(t, Insets(3, 0, 0, 3))
+    }
+
+    fileLabel.foreach { t =>
+      StackPane.setAlignment(t, Pos.BottomRight)
+      // top, right, bottom, left
+      StackPane.setMargin(t, Insets(0, 4, 2, 0))
+    }
 
     cell.onMouseClicked = _ =>
       selected match
@@ -85,6 +116,10 @@ final class Gui(controller: Controller) extends Observer:
     boardGrid.add(cell, col, 7 - row) // y=0 (rank 1) at bottom
 
   private def lightSquare(x: Int, y: Int): Boolean = (x + y) % 2 == 0
+
+  private def coordTextColor(isLight: Boolean): Color =
+    // Use the opposite tile color for readability
+    if isLight then Color.rgb(181, 136, 99) else Color.rgb(240, 217, 181)
 
   private def tileAt(col: Int, row: Int): Tile =
     Tile(('a'.toInt + col).toChar, row + 1)
