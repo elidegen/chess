@@ -1,9 +1,9 @@
 package aview
 
-import controller.Controller
+import controller.controllerComponent.ControllerInterface
 import util.Observer
 
-class Tui(controller: Controller) extends Observer:
+class Tui(controller: ControllerInterface) extends Observer:
   controller.add(this)
 
   def processInput(input: String): Unit =

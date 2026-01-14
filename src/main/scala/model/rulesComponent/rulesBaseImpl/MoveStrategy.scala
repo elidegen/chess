@@ -1,4 +1,6 @@
-package model
+package model.rulesComponent.rulesBaseImpl
+
+import model.dataComponent.dataBaseImpl.*
 
 import MoveHelpers.*
 

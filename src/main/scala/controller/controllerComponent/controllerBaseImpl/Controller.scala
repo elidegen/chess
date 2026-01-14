@@ -1,9 +1,9 @@
-package controller
+package controller.controllerComponent.controllerBaseImpl
+import controller.controllerComponent.ControllerInterface
+import model.rulesComponent.RulesInterface
+import model.dataComponent.DataInterface
 
-import model.{GameMode, GameFactory, Chessboard, Tile, Move, Classic, StartPositions, White, PlayingState, GameContext}
-import util.{Observable, UndoManager}
-
-case class Controller(var ctx: GameContext) extends Observable:
+final class Controller(var ctx: GameContext) extends Observable with ControllerInterface:
   def chessboard: Chessboard = ctx.board
   private val undoManager = new UndoManager()
 
@@ -40,3 +40,7 @@ case class Controller(var ctx: GameContext) extends Observable:
     undoManager.doStep(new MoveCommand(this, ctxNew))
 
     notifyObservers
+
+  def currentPlayer: Color = ctx.currentPlayer
+
+  def stateName: String = ctx.state.name

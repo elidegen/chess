@@ -1,4 +1,6 @@
-package model
+package model.dataComponent.dataBaseImpl
+
+import model.rulesComponent.rulesBaseImpl.{PlayingState, GameContext}
 
 enum GameMode:
   case Classic

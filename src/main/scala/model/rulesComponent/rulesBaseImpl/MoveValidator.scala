@@ -1,4 +1,6 @@
-package model
+package model.rulesComponent.rulesBaseImpl
+
+import model.dataComponent.dataBaseImpl.{Color, Move, Piece, Empty, Chessboard}
 
 // color is the player that made the last move
 abstract class MoveValidator():

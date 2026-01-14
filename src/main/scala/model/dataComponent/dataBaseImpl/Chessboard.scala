@@ -1,19 +1,12 @@
-package model
+package model.dataComponent.dataBaseImpl
 
-import model._
+import model.rulesComponent.rulesBaseImpl.{MoveValidator, GameContext}
 
 abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   protected def createInitialTiles(): Map[Tile, Piece]
 
   protected def newBoard(tiles: Map[Tile, Piece]): Chessboard
-
-  protected def createMoveValidator(): MoveValidator
-
-  lazy val validator: MoveValidator = createMoveValidator()
-
-  def validateMove(ctx: GameContext, move: Move): Boolean =
-    validator.validate(ctx, move)
 
   def reset(): Chessboard =
     newBoard(createInitialTiles())

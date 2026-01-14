@@ -17,6 +17,7 @@ val scalafxVersion = "21.0.0-R32"
 
 // Running JavaFX from sbt is more reliable when forking.
 fork := true
+Compile / run / connectInput := true
 
 libraryDependencies += "org.scalafx" %% "scalafx" % scalafxVersion
 libraryDependencies ++= {

@@ -1,4 +1,6 @@
-package model
+package model.dataComponent.dataBaseImpl
+
+import model.rulesComponent.rulesBaseImpl.{MoveValidator, StrategyProvider, ClassicStrategyProvider, GameContext}
 
 class Classic(initialTiles: Map[Tile, Piece]) extends Chessboard(initialTiles):
 

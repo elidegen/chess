@@ -1,4 +1,6 @@
-package model
+package model.rulesComponent.rulesBaseImpl
+
+import model.dataComponent.dataBaseImpl.{Color, Move, Chessboard}
 
 trait GameState:
   def handleMove(ctx: GameContext, move: Move): GameContext
