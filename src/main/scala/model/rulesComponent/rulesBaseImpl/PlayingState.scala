@@ -1,16 +1,13 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
-import model.rulesComponent.RulesInterface
-import model.rulesComponent.{GameContext, GameState}
+import model.rulesComponent.{GameContext, GameState, MoveValidator}
 
 object PlayingState extends GameState:
   override def name: String = "Playing"
 
-  override def handleMove(ctx: GameContext, move: Move)(using
-      v: MoveValidator,
-      r: RulesInterface): GameContext =
-    if !r.validateMove(ctx, move) then
+  override def handleMove(ctx: GameContext, move: Move)(using v: MoveValidator): GameContext =
+    if !v.validate(ctx, move) then
       println("Invalid Move! playingState")
       ctx
     else

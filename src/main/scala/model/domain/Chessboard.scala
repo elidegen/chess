@@ -1,7 +1,5 @@
 package model.domain
 
-import model.domain.*
-
 abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   protected def createInitialTiles(): Map[Tile, Piece]

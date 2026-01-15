@@ -1,12 +1,13 @@
 package controller.controllerComponent.controllerBaseImpl
 
 import model.domain.*
+import app.GameFactory
 import util.{UndoManager, Observable}
 import model.rulesComponent.RulesInterface
 import controller.controllerComponent.ControllerInterface
 import model.rulesComponent.{GameContext, GameState}
 
-final class Controller(var ctx: GameContext)(using rules: RulesInterface)
+final class Controller(var ctx: GameContext)(using r: RulesInterface)
     extends Observable
     with ControllerInterface:
   def chessboard = ctx.board
@@ -40,7 +41,7 @@ final class Controller(var ctx: GameContext)(using rules: RulesInterface)
       println("invalid coordinates")
       return
 
-    val ctxNew = ctx.handleMove(Move(Tile(fromX, fromY), Tile(toX, toY)))
+    val ctxNew = r.handleMove(ctx, Move(Tile(fromX, fromY), Tile(toX, toY)))
     if (ctx == ctxNew) return;
     undoManager.doStep(new MoveCommand(this, ctxNew))
 

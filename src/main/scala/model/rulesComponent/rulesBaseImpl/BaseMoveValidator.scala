@@ -1,9 +1,9 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
-import model.rulesComponent.{GameContext, GameState}
+import model.rulesComponent.{GameContext, GameState, MoveValidator}
 
-trait MoveValidator():
+trait BaseMoveValidator() extends MoveValidator:
   final def validate(ctx: GameContext, move: Move): Boolean =
     val piece = ctx.board.getPiece(move)
 
@@ -36,7 +36,7 @@ trait MoveValidator():
 
 final case class ClassicMoveValidator(
     override protected val strategies: StrategyProvider = ClassicStrategyProvider)
-    extends MoveValidator:
+    extends BaseMoveValidator:
   override protected def isCorrectPlayer(ctx: GameContext, piece: Piece): Boolean =
     val pieceColor = piece match
       case Pawn(c) => c
@@ -47,3 +47,7 @@ final case class ClassicMoveValidator(
       case King(c) => c
       case _: Empty => return false
     pieceColor == ctx.currentPlayer
+
+  def isCheck(board: Chessboard, color: Color): Boolean = false;
+  def isDraw(board: Chessboard, color: Color): Boolean = false;
+  def isCheckmate(board: Chessboard, color: Color): Boolean = false;

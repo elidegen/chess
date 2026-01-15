@@ -1,7 +1,5 @@
 package model.domain
 
-import model.domain.*
-
 class Classic(initialTiles: Map[Tile, Piece]) extends Chessboard(initialTiles):
 
   override protected def newBoard(tiles: Map[Tile, Piece]): Chessboard =
