@@ -1,6 +1,7 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
+import model.rulesComponent.{GameContext, GameState}
 
 object MoveHelpers:
   def charToNr(t: Tile): Int = t.x - 'a'

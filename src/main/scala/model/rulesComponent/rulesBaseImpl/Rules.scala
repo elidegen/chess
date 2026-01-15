@@ -1,10 +1,13 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
+import model.rulesComponent.{GameContext, GameState}
+import model.rulesComponent.RulesInterface
 
-final class Rules(using v: MoveValidator) extends model.rulesComponent.RulesInterface:
+final class Rules(using r: RulesInterface, v: MoveValidator)
+    extends model.rulesComponent.RulesInterface:
   override def validateMove(ctx: GameContext, move: Move): Boolean =
-    v.validateMove(ctx, move)
+    r.validateMove(ctx, move)
 
   override def handleMove(ctx: GameContext, move: Move): GameContext =
     ctx.state.handleMove(ctx, move)

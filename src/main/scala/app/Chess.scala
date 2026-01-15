@@ -2,6 +2,7 @@ import scala.io.StdIn.readLine
 
 import aview.{Tui, Gui}
 import model.domain.*
+import model.rulesComponent.{GameContext, GameState}
 
 object Chess:
   def main(args: Array[String]): Unit =

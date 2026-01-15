@@ -2,7 +2,7 @@ package controller.controllerComponent.controllerBaseImpl
 
 import util.Command
 import controller.controllerComponent.ControllerInterface
-import model.rulesComponent.rulesBaseImpl.{GameContext}
+import model.rulesComponent.{GameContext, GameState}
 import scala.compiletime.uninitialized
 
 final class MoveCommand(controller: Controller, ctx: GameContext) extends Command:

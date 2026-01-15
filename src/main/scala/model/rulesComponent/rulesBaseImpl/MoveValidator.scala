@@ -1,8 +1,9 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
+import model.rulesComponent.{GameContext, GameState}
 
-abstract class MoveValidator():
+trait MoveValidator():
   final def validate(ctx: GameContext, move: Move): Boolean =
     val piece = ctx.board.getPiece(move)
 

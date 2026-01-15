@@ -4,6 +4,7 @@ import model.domain.*
 import util.{UndoManager, Observable}
 import model.rulesComponent.RulesInterface
 import controller.controllerComponent.ControllerInterface
+import model.rulesComponent.{GameContext, GameState}
 
 final class Controller(var ctx: GameContext)(using rules: RulesInterface)
     extends Observable

@@ -2,6 +2,7 @@ package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
 import model.rulesComponent.RulesInterface
+import model.rulesComponent.{GameContext, GameState}
 
 object PlayingState extends GameState:
   override def name: String = "Playing"
@@ -17,8 +18,8 @@ object PlayingState extends GameState:
       val nextPlayer = ctx.currentPlayer.opponent
 
       val nextState: GameState =
-        if v.isCheckmate(newBoard, nextPlayer) then CheckmateState(ctx, nextPlayer)
-        else if v.isCheck(newBoard, nextPlayer) then CheckState(ctx, nextPlayer)
+        if v.isCheckmate(newBoard, nextPlayer) then CheckmateState(nextPlayer)
+        else if v.isCheck(newBoard, nextPlayer) then CheckState(nextPlayer)
         else if v.isDraw(newBoard, nextPlayer) then DrawState()
         else PlayingState
 

@@ -1,7 +1,7 @@
 import controller.controllerComponent.ControllerInterface
 import model.rulesComponent.RulesInterface
 import model.dataComponent.DataInterface
-
+import model.rulesComponent.{GameContext, GameState}
 import controller.controllerComponent.controllerBaseImpl.Controller as ControllerBase
 import model.rulesComponent.rulesBaseImpl.Rules as RulesBase
 import model.dataComponent.dataBaseImpl.Data as DataBase // Beispielname
