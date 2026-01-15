@@ -1,6 +1,7 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
+import model.rulesComponent.GameContext
 
 final case class CheckState(ctx: GameContext, playerInCheck: Color) extends GameState:
   override def name: String = s"$playerInCheck is in Check!"
@@ -14,12 +15,11 @@ final case class CheckState(ctx: GameContext, playerInCheck: Color) extends Game
       val nextPlayer = playerInCheck.opponent
 
       val nextState =
-        if ctx.board.validator.isCheck(newBoard, playerInCheck) then
+        if v.isCheck(newBoard, playerInCheck) then
           println("Invalid Move! You are in Check!")
           CheckState(ctx, playerInCheck)
-        else if ctx.board.validator.isDraw(newBoard, nextPlayer) then DrawState()
-        else if ctx.board.validator.isCheckmate(newBoard, nextPlayer) then
-          CheckmateState(ctx, playerInCheck)
+        else if v.isDraw(newBoard, nextPlayer) then DrawState()
+        else if v.isCheckmate(newBoard, nextPlayer) then CheckmateState(ctx, playerInCheck)
         else PlayingState
 
       ctx.copy(board = newBoard, currentPlayer = nextPlayer, state = nextState)

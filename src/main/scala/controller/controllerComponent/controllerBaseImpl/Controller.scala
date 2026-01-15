@@ -1,13 +1,19 @@
 package controller.controllerComponent.controllerBaseImpl
 
 import model.domain.*
-import util.Observable
+import util.{UndoManager, Observable}
+import model.rulesComponent.RulesInterface
+import controller.controllerComponent.ControllerInterface
 
-final class Controller(var ctx: GameContext)(using rules: RulesInterface, data: DataInterface)
+final class Controller(var ctx: GameContext)(using rules: RulesInterface)
     extends Observable
     with ControllerInterface:
   def chessboard = ctx.board
   private val undoManager = new UndoManager()
+
+  def newGame(mode: GameMode = GameMode.Classic): Unit =
+    ctx = GameFactory.newGame(mode)
+    notifyObservers
 
   def undo(): Unit =
     undoManager.undoStep()
