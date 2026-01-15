@@ -1,15 +1,14 @@
 import controller.controllerComponent.ControllerInterface
 import model.rulesComponent.RulesInterface
-import model.dataComponent.DataInterface
 import model.rulesComponent.{GameContext, GameState}
 import controller.controllerComponent.controllerBaseImpl.Controller as ControllerBase
 import model.rulesComponent.rulesBaseImpl.Rules as RulesBase
-import model.dataComponent.dataBaseImpl.Data as DataBase // Beispielname
+import model.domain.*
 
 object ChessModule:
-  given ControllerInterface = ControllerBase()
-  given DataInterface = DataBase()
-  given RulesInterface = RulesBase()
+  given ControllerInterface = ControllerBase
+  given RulesInterface = RulesBase
+  given MoveValidatorj = ClassicMoveValidator
 
 object GameFactory:
   def newGame(mode: GameMode): GameContext =

@@ -10,9 +10,6 @@ class Classic(initialTiles: Map[Tile, Piece]) extends Chessboard(initialTiles):
   override protected def createInitialTiles(): Map[Tile, Piece] =
     StartPositions.classic
 
-  override protected def createMoveValidator(): MoveValidator =
-    ClassicMoveValidator()
-
 object Classic:
   def apply(): Classic =
     new Classic(StartPositions.classic)
