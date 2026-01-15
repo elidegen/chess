@@ -1,12 +1,12 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.{Move}
+import model.domain.*
 
 object PlayingState extends GameState:
   override def name: String = "Playing"
 
-  override def handleMove(ctx: GameContext, move: Move): GameContext =
-    if !ctx.board.validateMove(ctx, move) then
+  override def handleMove(ctx: GameContext, move: Move)(using v: MoveValidator): GameContext =
+    if !v.validateMove(ctx, move) then
       println("Invalid Move! playingState")
       ctx
     else
@@ -14,10 +14,13 @@ object PlayingState extends GameState:
       val nextPlayer = ctx.currentPlayer.opponent
 
       val nextState: GameState =
-        if ctx.board.validator.isCheckmate(newBoard, nextPlayer) then
-          CheckmateState(ctx, nextPlayer)
-        else if ctx.board.validator.isCheck(newBoard, nextPlayer) then CheckState(ctx, nextPlayer)
-        else if ctx.board.validator.isDraw(newBoard, nextPlayer) then DrawState()
+        if v.isCheckmate(newBoard, nextPlayer) then CheckmateState(ctx, nextPlayer)
+        else if v.isCheck(newBoard, nextPlayer) then CheckState(ctx, nextPlayer)
+        else if v.isDraw(newBoard, nextPlayer) then DrawState()
         else PlayingState
 
       ctx.copy(board = newBoard, currentPlayer = nextPlayer, state = nextState)
+
+  override def isCheck(board: Chessboard, color: Color): Boolean = false
+  override def isDraw(board: Chessboard, color: Color): Boolean = false
+  override def isCheckmate(board: Chessboard, color: Color): Boolean = false

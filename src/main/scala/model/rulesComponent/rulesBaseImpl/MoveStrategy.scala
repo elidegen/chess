@@ -1,8 +1,6 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.*
-
-import MoveHelpers.*
+import model.domain.*
 
 trait MoveStrategy:
   def isLegal(ctx: GameContext, move: Move, piece: Piece): Boolean

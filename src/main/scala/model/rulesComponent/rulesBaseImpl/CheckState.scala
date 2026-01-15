@@ -1,6 +1,6 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.{Color, Move}
+import model.domain.*
 
 final case class CheckState(ctx: GameContext, playerInCheck: Color) extends GameState:
   override def name: String = s"$playerInCheck is in Check!"

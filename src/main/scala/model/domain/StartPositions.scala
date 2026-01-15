@@ -1,4 +1,4 @@
-package model.dataComponent.dataBaseImpl
+package model.domain
 
 object StartPositions:
   private def setClassicPosition(x: Char, y: Int): Piece =

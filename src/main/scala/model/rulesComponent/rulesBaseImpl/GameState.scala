@@ -1,9 +1,8 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.{Color, Move, Chessboard}
+import model.domain.*
 
 trait GameState:
-  def handleMove(ctx: GameContext, move: Move): GameContext
   def name: String
 
 final case class GameContext(board: Chessboard, currentPlayer: Color, state: GameState):

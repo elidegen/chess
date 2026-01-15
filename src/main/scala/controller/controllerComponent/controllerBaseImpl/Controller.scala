@@ -1,10 +1,12 @@
 package controller.controllerComponent.controllerBaseImpl
-import controller.controllerComponent.ControllerInterface
-import model.rulesComponent.RulesInterface
-import model.dataComponent.DataInterface
 
-final class Controller(var ctx: GameContext) extends Observable with ControllerInterface:
-  def chessboard: Chessboard = ctx.board
+import model.domain.*
+import util.Observable
+
+final class Controller(var ctx: GameContext)(using rules: RulesInterface, data: DataInterface)
+    extends Observable
+    with ControllerInterface:
+  def chessboard = ctx.board
   private val undoManager = new UndoManager()
 
   def undo(): Unit =
@@ -13,10 +15,6 @@ final class Controller(var ctx: GameContext) extends Observable with ControllerI
 
   def redo(): Unit =
     undoManager.redoStep()
-    notifyObservers
-
-  def newGame(mode: GameMode = GameMode.Classic): Unit =
-    ctx = GameFactory.newGame(mode)
     notifyObservers
 
   def parseMove(input: String): Unit =

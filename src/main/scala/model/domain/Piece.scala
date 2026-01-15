@@ -1,4 +1,4 @@
-package model.dataComponent.dataBaseImpl
+package model.domain
 
 sealed trait Piece:
   override def toString(): String

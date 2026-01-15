@@ -10,7 +10,6 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 import scalafx.stage.Stage
 import controller.controllerComponent.ControllerInterface
-import model.dataComponent.dataBaseImpl.{Bishop, Black, Chessboard, Empty, GameMode, King, Knight, Pawn, Queen, Rook, Tile, White, Piece}
 import util.Observer
 import scalafx.scene.control.Hyperlink
 import scalafx.scene.text.{Font, Text, TextFlow}
@@ -18,6 +17,7 @@ import java.awt.Desktop
 import java.net.URI
 import scalafx.scene.layout.Region
 import scalafx.scene.layout.Priority
+import model.domain.*
 
 final class Gui(controller: ControllerInterface) extends Observer:
   controller.add(this)

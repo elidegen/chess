@@ -1,6 +1,6 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.{Move}
+import model.domain.*
 
 final case class DrawState() extends GameState:
   override def name: String = "Draw!"

@@ -1,6 +1,6 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.*
+import model.domain.*
 
 object MoveHelpers:
   def charToNr(t: Tile): Int = t.x - 'a'

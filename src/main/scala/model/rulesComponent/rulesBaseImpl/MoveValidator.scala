@@ -1,8 +1,7 @@
 package model.rulesComponent.rulesBaseImpl
 
-import model.dataComponent.dataBaseImpl.{Color, Move, Piece, Empty, Chessboard}
+import model.domain.*
 
-// color is the player that made the last move
 abstract class MoveValidator():
   final def validate(ctx: GameContext, move: Move): Boolean =
     val piece = ctx.board.getPiece(move)
@@ -33,3 +32,17 @@ abstract class MoveValidator():
   def isCheck(board: Chessboard, color: Color): Boolean
   def isDraw(board: Chessboard, color: Color): Boolean
   def isCheckmate(board: Chessboard, color: Color): Boolean
+
+final case class ClassicMoveValidator(
+    override protected val strategies: StrategyProvider = ClassicStrategyProvider)
+    extends MoveValidator:
+  override protected def isCorrectPlayer(ctx: GameContext, piece: Piece): Boolean =
+    val pieceColor = piece match
+      case Pawn(c) => c
+      case Rook(c) => c
+      case Knight(c) => c
+      case Bishop(c) => c
+      case Queen(c) => c
+      case King(c) => c
+      case _: Empty => return false
+    pieceColor == ctx.currentPlayer

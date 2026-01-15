@@ -1,12 +1,16 @@
-package model.dataComponent.dataBaseImpl
+package model.domain
 
-import model.rulesComponent.rulesBaseImpl.{MoveValidator, GameContext}
+import model.domain.*
 
 abstract class Chessboard(tiles: Map[Tile, Piece]):
 
   protected def createInitialTiles(): Map[Tile, Piece]
 
   protected def newBoard(tiles: Map[Tile, Piece]): Chessboard
+
+  def newGame(mode: GameMode = GameMode.Classic): Unit =
+    ctx = GameFactory.newGame(mode)
+    notifyObservers
 
   def reset(): Chessboard =
     newBoard(createInitialTiles())

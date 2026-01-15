@@ -1,4 +1,4 @@
-package model.dataComponent.dataBaseImpl
+package model.domain
 
 case class Move(from: Tile, to: Tile)
 case class Tile(x: Char, y: Int)

@@ -1,6 +1,6 @@
 package controller.controllerComponent
 
-import model.dataComponent.dataBaseImpl.{Chessboard, GameMode, Color}
+import model.domain.*
 import util.Observer
 
 trait ControllerInterface {
