@@ -1,13 +1,14 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
-import model.rulesComponent.{GameContext, GameState, MoveValidator}
+import model.rulesComponent.{GameContext, GameState, MoveValidatorInterface}
 import model.rulesComponent.RulesInterface
 
 final case class CheckState(playerInCheck: Color) extends GameState:
   override def name: String = s"$playerInCheck is in Check!"
 
-  override def handleMove(ctx: GameContext, move: Move)(using v: MoveValidator): GameContext =
+  override def handleMove(ctx: GameContext, move: Move)(using
+      v: MoveValidatorInterface): GameContext =
     if !v.validate(ctx, move) then
       println("Invalid Move! checkState")
       ctx
