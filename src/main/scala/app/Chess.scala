@@ -10,7 +10,7 @@ object Chess:
     val controller = summon[ControllerInterface]
     Gui.start(controller)
     val tui = Tui(controller)
-    controller.newGame()
+    if !controller.loadFromFile() then controller.newGame()
     Iterator
       .continually(Option(readLine()))
       .takeWhile(_.exists(_ != "quit"))
