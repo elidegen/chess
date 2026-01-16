@@ -39,4 +39,4 @@ libraryDependencies ++= {
     .map(m => "org.openjfx" % s"javafx-$m" % javafxVersion classifier platform)
 }
 
-Compile / run / mainClass := Some("Chess")
+Compile / run / mainClass := Some("app/Chess")
