@@ -9,8 +9,7 @@ import scalafx.scene.layout.{GridPane, HBox, StackPane, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Rectangle
 import scalafx.stage.Stage
-import controller.Controller
-import model.{Bishop, Black, Chessboard, Empty, GameMode, King, Knight, Pawn, Queen, Rook, Tile, White, Piece}
+import controller.controllerComponent.ControllerInterface
 import util.Observer
 import scalafx.scene.control.Hyperlink
 import scalafx.scene.text.{Font, Text, TextFlow}
@@ -18,8 +17,9 @@ import java.awt.Desktop
 import java.net.URI
 import scalafx.scene.layout.Region
 import scalafx.scene.layout.Priority
+import model.domain.*
 
-final class Gui(controller: Controller) extends Observer:
+final class Gui(controller: ControllerInterface) extends Observer:
   controller.add(this)
 
   private val statusLabel = new Label("")
@@ -179,7 +179,7 @@ final class Gui(controller: Controller) extends Observer:
 
   private def renderStatus(): Unit =
     statusLabel.text =
-      s"State: ${controller.ctx.state.name}  |  Current Player: ${controller.ctx.currentPlayer}"
+      s"State: ${controller.stateName}  |  Current Player: ${controller.currentPlayer}"
 
   val infoText = new Text("Icons provided by")
 
@@ -234,7 +234,7 @@ final class Gui(controller: Controller) extends Observer:
 object Gui:
   @volatile private var started = false
 
-  def start(controller: Controller): Unit =
+  def start(controller: ControllerInterface): Unit =
     if started then return
     started = true
 

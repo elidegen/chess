@@ -3,7 +3,7 @@ package aview
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
-import controller._
+import controller.controllerComponent.ControllerInterface
 import model._
 
 class TuiSpec extends AnyWordSpec with Matchers:

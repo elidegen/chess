@@ -17,6 +17,7 @@ val scalafxVersion = "21.0.0-R32"
 
 // Running JavaFX from sbt is more reliable when forking.
 fork := true
+Compile / run / connectInput := true
 
 libraryDependencies += "org.scalafx" %% "scalafx" % scalafxVersion
 libraryDependencies ++= {
@@ -38,4 +39,4 @@ libraryDependencies ++= {
     .map(m => "org.openjfx" % s"javafx-$m" % javafxVersion classifier platform)
 }
 
-Compile / run / mainClass := Some("Chess")
+Compile / run / mainClass := Some("app/Chess")
