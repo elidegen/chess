@@ -38,5 +38,7 @@ libraryDependencies ++= {
   Seq("base", "controls", "fxml", "graphics")
     .map(m => "org.openjfx" % s"javafx-$m" % javafxVersion classifier platform)
 }
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0"
+libraryDependencies += "com.lihaoyi" %% "ujson" % "3.1.3"
 
 Compile / run / mainClass := Some("app/Chess")

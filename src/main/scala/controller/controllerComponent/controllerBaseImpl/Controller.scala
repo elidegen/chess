@@ -6,15 +6,16 @@ import util.{UndoManager, Observable}
 import model.rulesComponent.RulesInterface
 import controller.controllerComponent.ControllerInterface
 import model.rulesComponent.{GameContext, GameState}
+import model.fileIOCompononent.FileIOInterface
 
-final class Controller(var ctx: GameContext)(using r: RulesInterface)
+final class Controller(var ctx: GameContext)(using r: RulesInterface, f: FileIOInterface)
     extends Observable
     with ControllerInterface:
   def chessboard = ctx.board
   private val undoManager = new UndoManager()
 
-  def newGame(mode: GameMode = GameMode.Classic): Unit =
-    ctx = GameFactory.newGame(mode)
+  def newGame(gameMode: GameMode = GameMode.Classic): Unit =
+    ctx = GameFactory.newGame(gameMode)
     notifyObservers
 
   def undo(): Unit =
@@ -50,3 +51,15 @@ final class Controller(var ctx: GameContext)(using r: RulesInterface)
   def currentPlayer: Color = ctx.currentPlayer
 
   def stateName: String = ctx.state.name
+
+  def gameMode: GameMode = ctx.gameMode
+
+  override def loadFromFile(path: String = "game.xml"): Boolean =
+    try
+      val loadedCtx = f.load
+      ctx = loadedCtx
+      notifyObservers
+      true
+    catch
+      case _: Throwable =>
+        false
