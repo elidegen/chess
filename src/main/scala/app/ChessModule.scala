@@ -3,13 +3,13 @@ package app
 import controller.controllerComponent.ControllerInterface
 import controller.controllerComponent.controllerBaseImpl.Controller as ControllerBase
 import model.domain.*
-import model.rulesComponent.{GameContext, RulesInterface, MoveValidator}
+import model.rulesComponent.{GameContext, RulesInterface, MoveValidatorInterface}
 import model.rulesComponent.rulesBaseImpl.{Rules as RulesBase, ClassicMoveValidator, PlayingState}
 
 object ChessModule:
 
   // Rules dependencies
-  given moveValidator: MoveValidator = ClassicMoveValidator()
+  given moveValidator: MoveValidatorInterface = ClassicMoveValidator()
   given rules: RulesInterface = RulesBase()
 
   // Initial game context

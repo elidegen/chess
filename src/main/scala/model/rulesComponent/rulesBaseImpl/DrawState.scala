@@ -1,9 +1,10 @@
 package model.rulesComponent.rulesBaseImpl
 
 import model.domain.*
-import model.rulesComponent.{GameContext, GameState, MoveValidator}
+import model.rulesComponent.{GameContext, GameState, MoveValidatorInterface}
 
 final case class DrawState() extends GameState:
   override def name: String = "Draw!"
 
-  override def handleMove(ctx: GameContext, move: Move)(using v: MoveValidator): GameContext = ctx
+  override def handleMove(ctx: GameContext, move: Move)(using
+      v: MoveValidatorInterface): GameContext = ctx
