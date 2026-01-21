@@ -1,0 +1,18 @@
+package app
+
+import scala.io.StdIn.readLine
+import aview.{Tui, Gui}
+import controller.controllerComponent.ControllerInterface
+import app.ChessModule.controller
+
+object Chess:
+  def main(args: Array[String]): Unit =
+    val controller = summon[ControllerInterface]
+    Gui.start(controller)
+    val tui = Tui(controller)
+    if !controller.loadFromFile() then controller.newGame()
+    Iterator
+      .continually(Option(readLine()))
+      .takeWhile(_.exists(_ != "quit"))
+      .flatten
+      .foreach(tui.processInput)
