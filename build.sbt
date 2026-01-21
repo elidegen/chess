@@ -1,27 +1,24 @@
-// build.sbt
+import sbtdocker.DockerPlugin.autoImport.*
+import sbtdocker.mutable.Dockerfile
 
-// SBT Docker Plugin aktivieren
-enablePlugins(DockerPlugin)
+ThisBuild / scalaVersion := "3.4.2"
 
-val scalaVersion = "3.4.2"
-
-// Projekt-Konfiguration
-lazy val root = project
-  .in(file("."))
+lazy val root = (project in file("."))
+  .enablePlugins(sbtdocker.DockerPlugin)
   .settings(
     name := "chess",
     version := "0.1.0-SNAPSHOT",
-    scalaVersion := scalaVersion,
+
     libraryDependencies ++= Seq(
       "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.14",
-      "org.scalatest" %% "scalatest" % "3.2.14" % Test
+      "org.scalatest" %% "scalatest" % "3.2.14" % Test,
+      "org.scalafx" %% "scalafx" % "21.0.0-R32",
+      "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
+      "com.lihaoyi" %% "ujson" % "3.1.3"
     ),
 
-    // JavaFX / ScalaFX Konfiguration
-    fork := true,
-    Compile / run / connectInput := true,
-    libraryDependencies += "org.scalafx" %% "scalafx" % "21.0.0-R32",
+    // JavaFX classifier-Logik (so wie bei dir)
     libraryDependencies ++= {
       val os = System.getProperty("os.name").toLowerCase
       val arch = System.getProperty("os.arch").toLowerCase
@@ -39,14 +36,29 @@ lazy val root = project
       Seq("base", "controls", "fxml", "graphics")
         .map(m => "org.openjfx" % s"javafx-$m" % "21.0.2" classifier platform)
     },
-    libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
-    libraryDependencies += "com.lihaoyi" %% "ujson" % "3.1.3",
 
-    // Docker Plugin Einstellungen
-    dockerBaseImage := "openjdk:17-slim",  // Basis-Image für Docker
-    dockerExposedPorts := Seq(8080),  // Expose den Port 8080, falls du eine Web-Schnittstelle hast
-    dockerUpdateLatest := true,
+    fork := true,
+    Compile / run / mainClass := Some("app.Chess"),
 
-    // Hauptklasse für das Schachspiel definieren
-    Compile / run / mainClass := Some("app.Chess")  // Passe dies an die korrekte Main-Class an
+    // Assembly muss wissen, was die Main-Class ist
+    assembly / mainClass := Some("app.Chess"),
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", _*) => MergeStrategy.discard
+      case x                        => MergeStrategy.first
+    },
+
+    // sbt-docker: Image-Name (minimal)
+    docker / imageNames := Seq(ImageName(s"${name.value}:latest")),
+
+    // sbt-docker: Dockerfile-Definition (wichtigster fehlender Teil)
+    docker / dockerfile := {
+      val artifact = assembly.value
+      val targetPath = s"/app/${artifact.name}"
+
+      new Dockerfile {
+        from("eclipse-temurin:21-jre") // passt zu deinem GitHub Action JDK 21
+        add(artifact, targetPath)
+        entryPoint("java", "-jar", targetPath)
+      }
+    }
   )
