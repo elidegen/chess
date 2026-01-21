@@ -3,10 +3,21 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import model.domain.*
+import model.rulesComponent.rulesBaseImpl.PlayingState
+import model.rulesComponent.GameContext
+import model.rulesComponent.rulesBaseImpl.RookMoveStrategy
+import model.rulesComponent.rulesBaseImpl.BishopMoveStrategy
+import model.rulesComponent.rulesBaseImpl.QueenMoveStrategy
+import model.rulesComponent.rulesBaseImpl.KnightMoveStrategy
+import model.rulesComponent.rulesBaseImpl.KingMoveStrategy
+import model.rulesComponent.rulesBaseImpl.PawnMoveStrategy
+import model.rulesComponent.rulesBaseImpl.EmptyMoveStrategy
+
 class MoveStrategySpec extends AnyWordSpec with Matchers:
 
   private def ctxWithBoard(board: Classic, current: Color = White): GameContext =
-    GameContext(board = board, currentPlayer = current, state = PlayingState)
+    GameContext(board = board, currentPlayer = current, state = PlayingState, gameMode = GameMode.Classic)
 
   "RookMoveStrategy" should:
 

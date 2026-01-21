@@ -3,10 +3,24 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import model.domain.*
+import model.rulesComponent.GameContext
+import model.rulesComponent.rulesBaseImpl.PlayingState
+import model.rulesComponent.MoveValidatorInterface
+import model.rulesComponent.rulesBaseImpl.ClassicMoveValidator
+import model.fileIOCompononent.FileIOInterface
+
 class PlayingStateSpec extends AnyWordSpec with Matchers:
 
   private def freshCtx(): GameContext =
-    GameContext(board = Classic(), currentPlayer = White, state = PlayingState)
+    GameContext(board = Classic(), currentPlayer = White, state = PlayingState, gameMode = GameMode.Classic)
+  given v: MoveValidatorInterface =
+      ClassicMoveValidator()
+  given f: FileIOInterface with
+    override def load: GameContext =
+      throw new UnsupportedOperationException("not used in this test")
+
+    override def save(ctx: GameContext): Unit = ()
 
   "PlayingState.handleMove" should:
 

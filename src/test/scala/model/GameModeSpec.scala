@@ -3,6 +3,10 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import model.domain.*
+import app.GameFactory
+import model.rulesComponent.rulesBaseImpl.PlayingState
+
 class GameModeSpec extends AnyWordSpec with Matchers:
 
   "GameFactory.newGame" should:

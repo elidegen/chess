@@ -3,13 +3,26 @@ package controller
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
-import model.*
+import model.domain.*
+import model.rulesComponent.{GameContext, RulesInterface}
+import model.rulesComponent.rulesBaseImpl.{PlayingState, Rules}
+import controller.controllerComponent.controllerBaseImpl.Controller
+import model.fileIOCompononent.FileIOInterface
+import model.rulesComponent.MoveValidatorInterface
+import model.rulesComponent.rulesBaseImpl.ClassicMoveValidator
 
 class ControllerSpec extends AnyWordSpec with Matchers:
 
   private def freshController(): Controller =
-    Controller(GameContext(board = Classic(), currentPlayer = White, state = PlayingState))
-
+    Controller(GameContext(board = Classic(), currentPlayer = White, state = PlayingState, gameMode = GameMode.Classic))
+  given v: MoveValidatorInterface =
+    ClassicMoveValidator()
+  given f: FileIOInterface with
+    override def load: GameContext =
+      throw new UnsupportedOperationException("not used in this test")
+    override def save(ctx: GameContext): Unit = ()
+  given r: RulesInterface = 
+    Rules()
   "parseMove(String)" should:
 
     "apply a valid move to the chessboard" in:
