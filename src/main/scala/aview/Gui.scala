@@ -203,7 +203,10 @@ final class Gui(controller: ControllerInterface) extends Observer:
   undo.onAction = _ => controller.undo()
   redo.onAction = _ => controller.redo()
   newGame.onAction = _ => controller.newGame(GameMode.Classic)
-  quit.onAction = _ => Platform.runLater(() => Platform.exit())
+  quit.onAction = _ =>
+    Platform.exit()
+    System.exit(0)
+  // quit.onAction = _ => Platform.runLater(() => Platform.exit())
 
   private val rootNode: VBox = new VBox {
     spacing = 10
