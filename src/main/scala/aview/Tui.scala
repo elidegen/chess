@@ -14,11 +14,11 @@ class Tui(controller: ControllerInterface) extends Observer:
       return
 
     trimmedInput match
-      case "quit" =>
+      case "quit" => System.exit(0)
       case "undo" => controller.undo()
       case "redo" => controller.redo()
       case "new" => controller.newGame()
-      case _ => controller.parseMove(input)
+      case _ => controller.parseMove(trimmedInput)
 
   override def update: Unit =
     print("\u001b[2J\u001b[H")

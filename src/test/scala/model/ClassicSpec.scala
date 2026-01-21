@@ -3,12 +3,19 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import model.domain.*
+import model.rulesComponent.{GameContext, MoveValidatorInterface}
+import model.rulesComponent.rulesBaseImpl.{PlayingState, ClassicMoveValidator}
+
 class ClassicSpec extends AnyWordSpec with Matchers:
 
   private def freshBoard(): Classic = Classic()
 
   private def freshCtx(): GameContext =
-    GameContext(board = freshBoard(), currentPlayer = White, state = PlayingState)
+    GameContext(board = freshBoard(), currentPlayer = White, state = PlayingState, gameMode = GameMode.Classic)
+
+  given v: MoveValidatorInterface =
+    ClassicMoveValidator()
 
   "Classic" should:
 
@@ -37,26 +44,26 @@ class ClassicSpec extends AnyWordSpec with Matchers:
     "allow a legal white move when it is White's turn" in:
       val ctx = freshCtx()
 
-      val ok = ctx.board.validateMove(ctx, Move(Tile('a', 2), Tile('a', 3)))
+      val ok = summon[MoveValidatorInterface].validate(ctx, Move(Tile('a', 2), Tile('a', 3)))
       ok shouldBe true
 
     "reject a move by the wrong player" in:
       val ctx = freshCtx()
 
-      val ok = ctx.board.validateMove(ctx, Move(Tile('a', 7), Tile('a', 6)))
+      val ok = summon[MoveValidatorInterface].validate(ctx, Move(Tile('a', 7), Tile('a', 6)))
       ok shouldBe false
 
     "reject an illegal pawn move" in:
       val ctx = freshCtx()
 
-      val ok = ctx.board.validateMove(ctx, Move(Tile('a', 2), Tile('a', 5)))
+      val ok = summon[MoveValidatorInterface].validate(ctx, Move(Tile('a', 2), Tile('a', 5)))
       ok shouldBe false
 
     "apply a legal move on the board and update pieces accordingly" in:
       val ctx = freshCtx()
 
       val move = Move(Tile('a', 2), Tile('a', 3))
-      ctx.board.validateMove(ctx, move) shouldBe true
+      summon[MoveValidatorInterface].validate(ctx, move) shouldBe true
 
       val newBoard = ctx.board.move(move)
       newBoard.getPiece(Tile('a', 2)) shouldBe Empty()
