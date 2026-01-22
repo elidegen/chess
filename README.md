@@ -7,8 +7,6 @@ Du brauchst **keinen Docker-Account**, **kein Java**, **kein X11** – nur Docke
 
 Die grafische Oberfläche läuft **im Container** und wird über den Browser angezeigt (noVNC).
 
----
-
 ## Voraussetzungen
 
 - Docker installiert  
