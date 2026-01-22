@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.scalameta" %% "munit" % "1.0.0" % Test,
       "org.scalactic" %% "scalactic" % "3.2.14",
       "org.scalatest" %% "scalatest" % "3.2.14" % Test,
-      "org.scalafx" %% "scalafx" % "21.0.0-R32",
+      ("org.scalafx" %% "scalafx" % "21.0.0-R32").excludeAll(ExclusionRule("org.openjfx")),
       "org.scala-lang.modules" %% "scala-xml" % "2.4.0",
       "com.lihaoyi" %% "ujson" % "3.1.3"
     ),
@@ -32,9 +32,14 @@ lazy val root = (project in file("."))
         } else {
           throw new Exception(s"Unsupported platform: os=$os arch=$arch")
         }
+      val jfxVersion = "22.0.1"
+      val jfxModules = Seq("base","graphics","controls","fxml","media")
 
-      Seq("base", "controls", "fxml", "graphics")
-        .map(m => "org.openjfx" % s"javafx-$m" % "21.0.2" classifier platform)
+      libraryDependencies ++=
+        jfxModules.map(m => "org.openjfx" % s"javafx-$m" % jfxVersion classifier platform)
+
+      Seq("base", "controls", "fxml", "graphics", "media")
+        .map(m => "org.openjfx" % s"javafx-$m" % "22.0.1" classifier platform)
     },
 
     fork := true,
