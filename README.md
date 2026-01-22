@@ -24,7 +24,7 @@ docker pull ghcr.io/elidegen/chess:novnc
 docker run --rm -p 127.0.0.1:6080:6080 ghcr.io/elidegen/chess:novnc
 ```
 
-## GUI ausführen => link im browser öffnen
+## GUI ausführen > link im browser öffnen
 ```
 http://localhost:6080/vnc.html
 ```
