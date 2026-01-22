@@ -3,7 +3,7 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
-import model._
+import model.domain.*
 
 class ChessboardSpec extends AnyWordSpec with Matchers:
   "getPiece(Tile)" should:

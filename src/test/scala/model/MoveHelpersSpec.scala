@@ -3,10 +3,15 @@ package model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 
+import model.domain.*
+import model.rulesComponent.GameContext
+import model.rulesComponent.rulesBaseImpl.PlayingState
+import model.rulesComponent.rulesBaseImpl.MoveHelpers
+
 class MoveHelpersSpec extends AnyWordSpec with Matchers:
 
   private def ctxClassic: GameContext =
-    GameContext(board = Classic(), currentPlayer = White, state = PlayingState)
+    GameContext(board = Classic(), currentPlayer = White, state = PlayingState, gameMode = GameMode.Classic)
 
   "MoveHelpers.charToNr / digitToNr" should {
     "convert tiles to 0-based coordinates" in {
