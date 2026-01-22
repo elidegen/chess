@@ -32,6 +32,9 @@ metals.sbt
 /.worksheet/
 
 run.sh
+test.sh
+dockerbuild.sh
+file.txt
 /.scala-build
 
 game.json
