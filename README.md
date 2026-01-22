@@ -2,8 +2,7 @@
 
 # Chess – Docker GUI (noVNC)
 
-Dieses Projekt wird als **fertiges Docker-Image** ausgeliefert.  
-Du brauchst **keinen Docker-Account**, **kein Java**, **kein X11** – nur Docker.
+Dieses Projekt wird als **fertiges Docker-Image** ausgeliefert.
 
 Die grafische Oberfläche läuft **im Container** und wird über den Browser angezeigt (noVNC).
 
