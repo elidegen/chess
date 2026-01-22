@@ -18,9 +18,8 @@ lazy val root = (project in file("."))
       "com.lihaoyi" %% "ujson" % "3.1.3"
     ),
 
-    // JavaFX classifier-Logik (so wie bei dir)
     libraryDependencies ++= {
-      val os = System.getProperty("os.name").toLowerCase
+      val os   = System.getProperty("os.name").toLowerCase
       val arch = System.getProperty("os.arch").toLowerCase
 
       val platform =
@@ -32,36 +31,30 @@ lazy val root = (project in file("."))
         } else {
           throw new Exception(s"Unsupported platform: os=$os arch=$arch")
         }
+
       val jfxVersion = "22.0.1"
-      val jfxModules = Seq("base","graphics","controls","fxml","media")
+      val jfxModules = Seq("base", "graphics", "controls", "fxml", "media")
 
-      libraryDependencies ++=
-        jfxModules.map(m => "org.openjfx" % s"javafx-$m" % jfxVersion classifier platform)
-
-      Seq("base", "controls", "fxml", "graphics", "media")
-        .map(m => "org.openjfx" % s"javafx-$m" % "22.0.1" classifier platform)
+      jfxModules.map(m => "org.openjfx" % s"javafx-$m" % jfxVersion classifier platform)
     },
 
     fork := true,
     Compile / run / mainClass := Some("app.Chess"),
 
-    // Assembly muss wissen, was die Main-Class ist
     assembly / mainClass := Some("app.Chess"),
     assembly / assemblyMergeStrategy := {
       case PathList("META-INF", _*) => MergeStrategy.discard
       case x                        => MergeStrategy.first
     },
 
-    // sbt-docker: Image-Name (minimal)
     docker / imageNames := Seq(ImageName(s"${name.value}:latest")),
 
-    // sbt-docker: Dockerfile-Definition (wichtigster fehlender Teil)
     docker / dockerfile := {
       val artifact = assembly.value
       val targetPath = s"/app/${artifact.name}"
 
       new Dockerfile {
-        from("eclipse-temurin:21-jre") // passt zu deinem GitHub Action JDK 21
+        from("eclipse-temurin:21-jre")
         add(artifact, targetPath)
         entryPoint("java", "-jar", targetPath)
       }
