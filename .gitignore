@@ -34,6 +34,7 @@ metals.sbt
 run.sh
 test.sh
 dockerbuild.sh
+dockerrun.sh
 file.txt
 /.scala-build
 

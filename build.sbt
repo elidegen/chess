@@ -1,10 +1,6 @@
-import sbtdocker.DockerPlugin.autoImport.*
-import sbtdocker.mutable.Dockerfile
-
 ThisBuild / scalaVersion := "3.4.2"
 
 lazy val root = (project in file("."))
-  .enablePlugins(sbtdocker.DockerPlugin)
   .settings(
     name := "chess",
     version := "0.1.0-SNAPSHOT",
@@ -46,17 +42,4 @@ lazy val root = (project in file("."))
       case PathList("META-INF", _*) => MergeStrategy.discard
       case x                        => MergeStrategy.first
     },
-
-    docker / imageNames := Seq(ImageName(s"${name.value}:latest")),
-
-    docker / dockerfile := {
-      val artifact = assembly.value
-      val targetPath = s"/app/${artifact.name}"
-
-      new Dockerfile {
-        from("eclipse-temurin:21-jre")
-        add(artifact, targetPath)
-        entryPoint("java", "-jar", targetPath)
-      }
-    }
   )
