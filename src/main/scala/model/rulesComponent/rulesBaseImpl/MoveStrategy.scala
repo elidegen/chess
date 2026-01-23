@@ -3,9 +3,6 @@ package model.rulesComponent.rulesBaseImpl
 import model.domain.*
 import model.rulesComponent.{GameContext, GameState}
 
-trait MoveStrategy:
-  def isLegal(ctx: GameContext, move: Move, piece: Piece): Boolean
-
 trait StrategyProvider:
   def strategyFor(piece: Piece): MoveStrategy
 
@@ -19,6 +16,9 @@ object ClassicStrategyProvider extends StrategyProvider:
       case _: Queen => QueenMoveStrategy
       case _: King => KingMoveStrategy
       case _: Empty => EmptyMoveStrategy
+
+trait MoveStrategy:
+  def isLegal(ctx: GameContext, move: Move, piece: Piece): Boolean
 
 object RookMoveStrategy extends MoveStrategy:
 

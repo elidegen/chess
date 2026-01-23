@@ -1,18 +1,14 @@
-# ---------- Stage 1: Build (Scala/sbt) ----------
 FROM sbtscala/scala-sbt:graalvm-ce-22.3.3-b1-java17_1.12.0_3.7.4 AS build
+
 WORKDIR /chess
 COPY . /chess
 
-# Lädt Dependencies (Cache-freundlich) und baut ein Jar
 RUN sbt -batch update
+
 RUN sbt -batch assembly
 
-
-# ---------- Stage 2: Runtime (Java + Xvfb + VNC + noVNC) ----------
 FROM eclipse-temurin:21-jre-jammy
 
-# 1) GUI/JavaFX native libs (damit JavaFX unter Linux läuft)
-# 2) Xvfb + WM + VNC + noVNC Stack
 RUN apt-get update && apt-get install -y --no-install-recommends \
     xvfb fluxbox x11vnc novnc websockify \
     libgtk-3-0 libxrender1 libxtst6 libxi6 libxrandr2 libasound2 \
@@ -22,17 +18,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Assembly-Jar aus dem Build-Stage kopieren.
-# Hinweis: der Name hängt von deinem assembly output ab, daher wildcard.
 COPY --from=build /chess/target/scala-*/chess-assembly-*.jar /app/app.jar
 
-# Startup-Script in den Container
 COPY docker/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
+RUN chmod +x /app/start.sh
 
-# Ports:
-# 5900 = VNC
-# 6080 = noVNC (Browser)
 EXPOSE 5900 6080
 
 ENV DISPLAY=:0

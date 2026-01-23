@@ -34,9 +34,7 @@ trait MoveValidator() extends MoveValidatorInterface:
   def isDraw(board: Chessboard, color: Color): Boolean
   def isCheckmate(board: Chessboard, color: Color): Boolean
 
-final case class ClassicMoveValidator(
-    override protected val strategies: StrategyProvider = ClassicStrategyProvider)
-    extends MoveValidator:
+final case class ClassicMoveValidator(override protected val strategies: StrategyProvider = ClassicStrategyProvider) extends MoveValidator:
   override protected def isCorrectPlayer(ctx: GameContext, piece: Piece): Boolean =
     val pieceColor = piece match
       case Pawn(c) => c

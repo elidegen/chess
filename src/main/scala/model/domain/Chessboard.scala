@@ -9,16 +9,16 @@ abstract class Chessboard(tiles: Map[Tile, Piece]):
   def reset(): Chessboard =
     newBoard(createInitialTiles())
 
+  def move(move: Move): Chessboard =
+    val piece = getPiece(move)
+    newBoard(tiles + (move.to -> piece) + (move.from -> Empty()))
+
   def getPiece(move: Move): Piece = tiles.getOrElse(move.from, Empty())
 
   def getPiece(tile: Tile): Piece = tiles.getOrElse(tile, Empty())
 
   def setPiece(tile: Tile, piece: Piece): Chessboard =
     newBoard(tiles + (tile -> piece))
-
-  def move(move: Move): Chessboard =
-    val piece = getPiece(move)
-    newBoard(tiles + (move.to -> piece) + (move.from -> Empty()))
 
   override def toString(): String =
     val size = 8

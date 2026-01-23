@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Auflösung/Display einstellen
 WIDTH="${WIDTH:-1280}"
 HEIGHT="${HEIGHT:-720}"
 DEPTH="${DEPTH:-24}"
@@ -20,7 +19,7 @@ echo "Starting x11vnc on port 5900..."
 x11vnc -display ${DISPLAY} -forever -shared -rfbport 5900 ${VNC_AUTH} -bg
 
 echo "Starting noVNC on port 6080..."
-# novnc liefert üblicherweise /usr/share/novnc/ und nutzt websockify
+
 websockify --web=/usr/share/novnc/ 6080 localhost:5900 >/tmp/novnc.log 2>&1 &
 sleep 1
 

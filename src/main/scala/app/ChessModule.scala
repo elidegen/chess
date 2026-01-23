@@ -10,16 +10,12 @@ import model.fileIOCompononent.fileIOJSONImpl.{FileIO}
 import model.fileIOCompononent.FileIOInterface
 
 object ChessModule:
-
-  // Rules dependencies
   given moveValidator: MoveValidatorInterface = ClassicMoveValidator()
   given fileIO: FileIOInterface = FileIO()
   given rules: RulesInterface = Rules()
 
-  // Initial game context
   private val initialCtx: GameContext = GameFactory.newGame(GameMode.Classic)
 
-  // Controller (depends on RulesInterface)
   given controller: ControllerInterface =
     new ControllerBase(initialCtx)(using rules)
 
