@@ -3,7 +3,7 @@ package model.fileIOCompononent.fileIOXMLImpl
 import model.fileIOCompononent.FileIOInterface
 import model.rulesComponent.GameContext
 import model.domain.*
-import model.rulesComponent.rulesBaseImpl.* // nur wenn du hier States referenzierst
+import model.rulesComponent.rulesBaseImpl.*
 import scala.xml.*
 
 final class FileIO extends FileIOInterface {
@@ -67,7 +67,7 @@ final class FileIO extends FileIOInterface {
 
     val mode = stringToGameMode(modeStr)
     val board: Chessboard = mode match
-      case GameMode.Classic => new Classic(pieces) // dein Classic(initialTiles)
+      case GameMode.Classic => new Classic(pieces)
 
     val currentPlayer = stringToColor(currentPlayerStr)
     val state = stateFromStrings(stateName, params)

@@ -84,7 +84,6 @@ final class Gui(controller: ControllerInterface) extends Observer:
       children =
         Seq(bg, overlays(col)(row), squares(col)(row)) ++ rankLabel.toSeq ++ fileLabel.toSeq
 
-    // Position coordinate labels inside the tile
     rankLabel.foreach { t =>
       StackPane.setAlignment(t, Pos.TopLeft)
       StackPane.setMargin(t, Insets(3, 0, 0, 3))
@@ -92,7 +91,6 @@ final class Gui(controller: ControllerInterface) extends Observer:
 
     fileLabel.foreach { t =>
       StackPane.setAlignment(t, Pos.BottomRight)
-      // top, right, bottom, left
       StackPane.setMargin(t, Insets(0, 4, 2, 0))
     }
 
@@ -102,7 +100,7 @@ final class Gui(controller: ControllerInterface) extends Observer:
           selected = Some(col -> row)
           clearHighlights
           highlight(col, row)
-        case Some((selectedCol, selectedRow)) if selectedCol == col && selectedRow == row => // deselect if already selected
+        case Some((selectedCol, selectedRow)) if selectedCol == col && selectedRow == row =>
           selected = None
           clearHighlights
         case Some((selectedCol, selectedRow)) =>
@@ -118,7 +116,6 @@ final class Gui(controller: ControllerInterface) extends Observer:
   private def lightSquare(x: Int, y: Int): Boolean = (x + y) % 2 == 0
 
   private def coordTextColor(isLight: Boolean): Color =
-    // Use the opposite tile color for readability
     if isLight then Color.rgb(181, 136, 99) else Color.rgb(240, 217, 181)
 
   private def tileAt(col: Int, row: Int): Tile =
@@ -198,7 +195,7 @@ final class Gui(controller: ControllerInterface) extends Observer:
 
   val spacer = new Region
   HBox.setHgrow(spacer, Priority.Always)
-  HBox.setMargin(statusFlow, Insets(6, 0, 0, 0)) // top, right, bottom, left
+  HBox.setMargin(statusFlow, Insets(6, 0, 0, 0))
 
   undo.onAction = _ => controller.undo()
   redo.onAction = _ => controller.redo()

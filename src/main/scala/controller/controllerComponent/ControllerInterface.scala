@@ -10,7 +10,7 @@ trait ControllerInterface {
   def redo(): Unit
 
   def newGame(gameMode: GameMode): Unit
-  def newGame(): Unit = newGame(GameMode.Classic) // damit controller.newGame() weiterhin geht
+  def newGame(): Unit = newGame(GameMode.Classic)
 
   def parseMove(input: String): Unit
 
